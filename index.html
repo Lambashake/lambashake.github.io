@@ -1,133 +1,173 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek Lamba | Portfolio</title>
+    <title>Abhishek Lamba | Game Designer</title>
     <style>
         :root {
-            --bg: #0a0a0a;
-            --accent: #d4af37; /* Gold-tint for a prestige/AZADI feel */
-            --text: #e0e0e0;
-            --card-bg: #1a1a1a;
+            --tabletop: #121212;
+            --felt: radial-gradient(circle, #1a1a1a 0%, #050505 100%);
+            --accent: #d4af37; 
+            --card-white: #f4f1ea; /* "Ivory" cardstock color */
+            --ink: #1a1a1a;
         }
 
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Garamond', serif; /* More sophisticated for AZADI aesthetic */
+            background: var(--tabletop);
+            background-image: var(--felt);
+            color: #ccc;
+            font-family: 'Garamond', serif;
             margin: 0;
-            padding: 0;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
-        /* XP Bar - Top Fixed */
-        #xp-container {
+        /* Influence Tracker (XP Bar) */
+        #tracker-container {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 4px;
-            background: #222;
+            top: 20px;
+            width: 80%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #333;
             z-index: 1000;
         }
-        #xp-bar {
+        #tracker-bar {
             height: 100%;
             width: 0%;
             background: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
-            transition: width 0.1s;
+            box-shadow: 0 0 10px var(--accent);
+            transition: width 0.2s ease-out;
         }
 
-        /* Bio Section */
-        #bio-section {
-            max-width: 700px;
-            padding: 100px 20px 40px 20px;
+        /* Briefing Section (Bio) */
+        #briefing {
+            max-width: 650px;
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             text-align: center;
             line-height: 1.8;
-            font-size: 1.1rem;
-            border-bottom: 1px solid #333;
+            position: relative;
         }
 
+        /* Decorative Corners like a Game Box */
+        #briefing::before, #briefing::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+        }
+        #briefing::before { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+        #briefing::after { bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
+
         h1 { 
-            color: var(--accent); 
+            font-size: 2.5rem;
+            color: #fff; 
             text-transform: uppercase; 
-            letter-spacing: 5px; 
-            font-weight: 300;
-            margin-bottom: 5px;
+            letter-spacing: 8px; 
+            margin-bottom: 0;
         }
 
         .pronouns { 
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            opacity: 0.6; 
-            margin-bottom: 30px; 
-            display: block;
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 3px;
         }
 
-        strong { color: var(--accent); }
-
-        /* Card Section */
-        #card-area {
-            margin-top: 20px;
+        /* Player Hand Section */
+        #player-hand-area {
+            position: fixed;
+            bottom: -50px; /* Tucked away like a real hand */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 100px;
+            width: 100%;
+            transition: bottom 0.5s ease;
+        }
+
+        #player-hand-area:hover {
+            bottom: 20px; /* Pulls hand up on hover */
         }
 
         .instruction {
             color: var(--accent);
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-            margin-bottom: 5px; /* Very close to the cards */
+            font-size: 0.75rem;
+            margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
+            background: rgba(0,0,0,0.8);
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
         .hand {
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
             justify-content: center;
+            height: 300px;
+            width: 100%;
         }
 
-        /* The SHASN-Inspired Card Style */
+        /* SHASN-Inspired Cards */
         .card {
-            width: 140px;
-            height: 200px;
-            background: var(--card-bg);
-            border: 1px solid #444;
-            border-radius: 4px;
+            width: 160px;
+            height: 240px;
+            background-color: var(--card-white);
+            background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'); /* Linen texture filter */
+            border-radius: 8px;
+            border: 6px solid var(--card-white);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            margin-left: -40px; /* Overlap like a real hand */
+            color: var(--ink);
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            transition: all 0.3s ease;
             position: relative;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: bottom center;
+        }
+
+        /* Fan the cards out */
+        .card:nth-child(1) { transform: rotate(-15deg) translateY(20px); }
+        .card:nth-child(2) { transform: rotate(-10deg) translateY(10px); }
+        .card:nth-child(3) { transform: rotate(-5deg) translateY(5px); }
+        .card:nth-child(4) { transform: rotate(0deg); }
+        .card:nth-child(5) { transform: rotate(5deg) translateY(5px); }
+        .card:nth-child(6) { transform: rotate(10deg) translateY(10px); }
+        .card:nth-child(7) { transform: rotate(15deg) translateY(20px); }
+
+        .card:hover {
+            transform: translateY(-80px) rotate(0deg) scale(1.1) !important;
+            z-index: 100;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            border-color: var(--accent);
+        }
+
+        .card-inner-border {
+            border: 1px solid #ddd;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
             padding: 10px;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        /* Card Header Detail */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 5px; left: 5px; right: 5px; bottom: 5px;
-            border: 1px solid #333;
-            pointer-events: none;
         }
 
         .card-title {
-            font-size: 0.7rem;
+            font-family: 'Garamond', serif;
+            font-weight: bold;
+            font-size: 0.85rem;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 5px;
-            margin-top: 5px;
-            color: var(--accent);
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
         }
 
         .card-icon {
@@ -135,60 +175,43 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            opacity: 0.4;
+            font-size: 3rem;
+            filter: grayscale(1);
         }
-
-        .card:hover {
-            transform: translateY(-15px) scale(1.05);
-            border-color: var(--accent);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
-        }
-
-        .card:hover .card-icon {
-            opacity: 1;
-        }
-
     </style>
 </head>
 <body>
 
-    <div id="xp-container"><div id="xp-bar"></div></div>
+    <div id="tracker-container"><div id="tracker-bar"></div></div>
 
-    <section id="bio-section">
+    <section id="briefing">
         <h1>Abhishek Lamba</h1>
-        <span class="pronouns">THEY / THEM • DESIGNER • WRITER • PERFORMER • EDUCATOR</span>
+        <span class="pronouns">THEY / THEM • DESIGNER • WRITER • PERFORMER</span>
         
-        <p>
-            <strong>Abhishek Lamba</strong> is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. 
-        </p>
-        <p>
-            They have written, designed, and performed in immersive experiences like <em>She Moves Tech</em>, <em>Blood Moon Over Bengaluru</em>, and <em>Half-Life Curse</em>. They are also the creator of <strong>Artcade Night</strong>, a one of its kind event where they gamify art exhibits. 
-        </p>
-        <p>
-            Along with that, they are a co-founder of <strong>One Last Rule Club</strong>: a community of designers and artists in Bombay. They are proudly non-binary.
-        </p>
+        <p><strong>Abhishek Lamba</strong> is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change.</p>
+        <p>They have written, designed, and performed in immersive experiences like <em>She Moves Tech</em>, <em>Blood Moon Over Bengaluru</em>, and <em>Half-Life Curse</em>. They are also the creator of <strong>Artcade Night</strong>, a one of its kind event where they gamify art exhibits.</p>
+        <p>Along with that, they are a co-founder of <strong>One Last Rule Club</strong>: a community of designers and artists in Bombay. They are proudly non-binary.</p>
     </section>
 
-    <section id="card-area">
+    <div id="player-hand-area">
         <div class="instruction">Pick a card from your hand</div>
         <div class="hand">
-            <div class="card"><div class="card-title">Board Games</div><div class="card-icon">♙</div></div>
-            <div class="card"><div class="card-title">Art</div><div class="card-icon">◈</div></div>
-            <div class="card"><div class="card-title">Community</div><div class="card-icon">⊕</div></div>
-            <div class="card"><div class="card-title">Social Work</div><div class="card-icon">🜲</div></div>
-            <div class="card"><div class="card-title">Education</div><div class="card-icon">📖</div></div>
-            <div class="card"><div class="card-title">Immersive Theatre</div><div class="card-icon">🎭</div></div>
-            <div class="card"><div class="card-title">Press Coverage</div><div class="card-icon">🗞</div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Board Games</div><div class="card-icon">♙</div></div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Art</div><div class="card-icon">◈</div></div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Community</div><div class="card-icon">⊕</div></div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Social Work</div><div class="card-icon">🜲</div></div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Education</div><div class="card-icon">📖</div></div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Immersive Theatre</div><div class="card-icon">🎭</div></div></div>
+            <div class="card"><div class="card-inner-border"><div class="card-title">Press Coverage</div><div class="card-icon">🗞</div></div></div>
         </div>
-    </section>
+    </div>
 
     <script>
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             let scrolled = (winScroll / height) * 100;
-            document.getElementById("xp-bar").style.width = scrolled + "%";
+            document.getElementById("tracker-bar").style.width = scrolled + "%";
         };
     </script>
 
