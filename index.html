@@ -3,188 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek Lamba | GameBoy Portfolio</title>
+    <title>Abhishek Lamba | 8-Bit Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gb-dark: #081820;   /* Deepest GameBoy Green/Blue */
-            --gb-mid: #346856;    /* Mid-tone */
-            --gb-light: #88c070;  /* Traditional Screen Green */
-            --gb-bright: #e0f8d0; /* Highlight */
-            --accent: #f4af3d;
+            /* Kanto/Johto Palette */
+            --sky-blue: #a8e0e0;
+            --grass-green: #78c850;
+            --path-brown: #f8b8a0;
+            --water-blue: #6890f0;
+            --text-box-red: #e03838;
+            --accent: #f8d030; /* Bright yellow/gold */
+            --ink: #111;
         }
 
         body {
-            background-color: var(--gb-dark);
-            /* CRT / Pixel Grid Texture */
-            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 3px 100%;
-            color: var(--gb-bright);
+            background-color: var(--path-brown);
+            /* Retro 8-bit grid pattern */
+            background-image: linear-gradient(0deg, #edac92 1px, transparent 1px),
+                              linear-gradient(90deg, #edac92 1px, transparent 1px);
+            background-size: 16px 16px;
+            color: #000;
             font-family: 'VT323', monospace;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
             image-rendering: pixelated;
         }
 
-        /* Pokemon Style Dialogue Box */
-        #dialogue-box {
+        /* Pokémon-Style Dialogue Box */
+        #dialogue-container {
             width: 90%;
-            max-width: 650px;
+            max-width: 700px;
             margin: 30px 0;
-            padding: 20px;
-            background: #fff; /* Classic white dialogue box */
-            border: 6px solid #444;
+            background: #fff;
+            border: 5px solid #000;
             border-radius: 8px;
-            box-shadow: 0 8px 0 #000;
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
             position: relative;
-            min-height: 160px;
+            min-height: 180px;
+            overflow: hidden;
+        }
+
+        #dialogue-header {
+            height: 25px;
+            background: var(--text-box-red);
+            border-bottom: 5px solid #000;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
         }
 
         #bio-text {
-            color: #111; /* Text in dialogue boxes is usually dark */
-            font-size: 1.6rem;
+            padding: 15px 20px;
+            font-size: 1.7rem;
             line-height: 1.1;
             text-transform: uppercase;
+            color: #111;
         }
 
-        /* The Card Hand */
+        /* Player's Hand / Mobile Carousel */
+        #hand-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 50px;
+        }
+
+        .instruction {
+            color: #fff;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 20px;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
         .hand {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding: 20px;
+            justify-content: flex-start; /* For mobile scroll */
+            overflow-x: auto; /* Enable horizontal scrolling on mobile */
+            gap: 15px;
             width: 100%;
-            max-width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+            scrollbar-width: none; /* Hide scrollbar for clean look */
         }
 
-        /* 8-Bit Styled Cards */
+        .hand::-webkit-scrollbar { display: none; } /* Safari/Chrome hide */
+
+        /* 8-Bit Pixel Scene Card */
         .card {
-            width: 110px;
-            height: 160px;
-            background: var(--gb-bright);
+            flex: 0 0 auto; /* Stop mobile flexing */
+            width: 130px;
+            height: 190px;
+            background: #fdf6e3;
             border: 4px solid #000;
+            border-radius: 2px;
             color: #000;
             display: flex;
             flex-direction: column;
-            padding: 8px;
+            padding: 10px;
             cursor: pointer;
-            transition: all 0.1s steps(2); /* Jumpy, retro transition */
-            box-shadow: 4px 4px 0 #000;
+            transition: all 0.1s steps(2);
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+            transform-origin: bottom center;
         }
 
         .card:hover {
-            transform: translateY(-10px);
             background: var(--accent);
-            box-shadow: 8px 8px 0 #000;
+            transform: translateY(-10px);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
+        }
+
+        /* 8-Bit Scene Vignette (RPG Characters doing things) */
+        .pixel-scene {
+            width: 100%;
+            height: 120px;
+            border: 2px solid #000;
+            margin-bottom: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pixel-scene::before {
+            content: ''; position: absolute; width: 10px; height: 16px; background: #edac92;
+            box-shadow: 2px 2px 0 #000; left: 50%; bottom: 5px; transform: translateX(-50%);
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             text-align: center;
             text-transform: uppercase;
-            border-bottom: 2px solid #000;
-            padding-bottom: 4px;
-            margin-bottom: 10px;
+            font-weight: bold;
             height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
+            border-top: 1px solid #000;
+            padding-top: 5px;
         }
 
-        .card-icon {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Pixel-Art SVGs */
-        .card-icon svg {
-            width: 60px;
-            height: 60px;
-            fill: #000;
-        }
-
-        /* Modal / Window Overlays */
+        /* Popup Modal */
         #modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 24, 32, 0.95);
+            background: rgba(0,0,0,0.9);
             z-index: 2000;
             justify-content: center;
             align-items: center;
         }
 
         #modal-window {
-            width: 80%;
-            max-width: 500px;
-            background: var(--gb-bright);
-            border: 8px solid #000;
-            padding: 20px;
+            width: 90%; max-width: 500px;
+            background: #fff;
+            border: 10px solid #000;
+            padding: 30px;
             color: #000;
-            box-shadow: 10px 10px 0 var(--gb-mid);
+            box-shadow: 12px 12px 0 rgba(255,255,255,0.2);
         }
 
-        .instruction {
-            font-size: 1.2rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
+        #modal-title { font-size: 2.5rem; text-transform: uppercase; margin: 0; }
+        #modal-content { font-size: 1.5rem; margin-top: 20px; }
 
-        @media (max-width: 600px) {
-            .card { width: 40%; }
+        @media (min-width: 900px) {
+            .hand { justify-content: center; overflow-x: visible; } /* Grid on desktop */
+            .card { flex: 0 0 130px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="dialogue-box">
+    <div id="dialogue-container">
+        <div id="dialogue-header">Abhishek Lamba</div>
         <div id="bio-text"></div>
     </div>
 
-    <div class="instruction">Select an entry...</div>
-    
-    <div class="hand">
-        <div class="card" onclick="openModal('Board Games')">
-            <div class="card-title">Board Games</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2h2v2h-2V2zM10 4h4v2h-4V4zM8 6h8v2H8V6zM6 8h12v12H6V8zm2 2v8h8v-8H8z"/></svg></div>
-        </div>
+    <div id="hand-wrapper">
+        <div class="instruction">Select a section...</div>
+        
+        <div class="hand">
+            <div class="card" onclick="openModal('Board Games')">
+                <div class="pixel-scene" style="background: var(--path-brown);">
+                    <div style="position: absolute; width: 20px; height: 10px; background: #604020; left: 50%; top: 40%; transform: translateX(-50%); border: 1px solid #000;"></div>
+                    <div style="position: absolute; width: 6px; height: 10px; background: #1a1c2c; left: 42%; top: 30%; border: 1px solid #000;"></div> </div>
+                <div class="card-title">Board Games</div>
+            </div>
 
-        <div class="card" onclick="openModal('Art')">
-            <div class="card-title">Art</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H4V4zm2 2v8h12V6H6zM8 18h8v2H8v-2zM4 20h16v2H4v-2z"/></svg></div>
-        </div>
+            <div class="card" onclick="openModal('Art')">
+                <div class="pixel-scene" style="background: #e0f8cf;">
+                    <div style="position: absolute; width: 20px; height: 25px; background: #fff; left: 45%; top: 20%; border: 2px solid #000;"></div>
+                    <div style="position: absolute; width: 4px; height: 35px; background: #604020; left: 52%; top: 15%; border: 1px solid #000;"></div>
+                </div>
+                <div class="card-title">Art</div>
+            </div>
 
-        <div class="card" onclick="openModal('Community')">
-            <div class="card-title">Community</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M8 4h2v2H8V4zm6 0h2v2h-2V4zm-8 4h12v2H6V8zm0 4h2v8H6v-8zm8 0h2v8h-2v-8z"/></svg></div>
-        </div>
+            <div class="card" onclick="openModal('Community')">
+                <div class="pixel-scene" style="background: var(--grass-green);">
+                    <div style="position: absolute; width: 8px; height: 12px; background: #6890f0; left: 20%; bottom: 8px; border: 1px solid #000;"></div>
+                    <div style="position: absolute; width: 8px; height: 12px; background: #e03838; left: 60%; bottom: 12px; border: 1px solid #000;"></div>
+                </div>
+                <div class="card-title">Community</div>
+            </div>
 
-        <div class="card" onclick="openModal('Social Work')">
-            <div class="card-title">Social Work</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 10h4v2H4v-2zm12 0h4v2h-4v-2zM8 12h8v2H8v-2zm-2 2h2v4H6v-4zm10 0h2v4h-2v-4z"/></svg></div>
-        </div>
+            <div class="card" onclick="openModal('Social Work')">
+                <div class="pixel-scene" style="background: #f8e8b0;">
+                    <div style="position: absolute; width: 8px; height: 8px; background: #111; left: 30%; bottom: 3px; border: 1px solid #000;"></div>
+                    <div style="position: absolute; width: 8px; height: 12px; background: var(--grass-green); left: 35%; bottom: 8px; border: 1px solid #000; transform: rotate(15deg);"></div>
+                </div>
+                <div class="card-title">Social Work</div>
+            </div>
 
-        <div class="card" onclick="openModal('Education')">
-            <div class="card-title">Education</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M2 6l10-4 10 4-10 4-10-4zm10 6v6l8-4v-6l-8 4z"/></svg></div>
-        </div>
+            <div class="card" onclick="openModal('Education')">
+                <div class="pixel-scene" style="background: #cfcfcf;">
+                    <div style="position: absolute; width: 30px; height: 20px; background: #1a1c2c; left: 45%; top: 20%; border: 2px solid #000;"></div>
+                    <div style="position: absolute; width: 2px; height: 15px; background: #000; left: 40%; top: 30%; border: 1px solid #000;"></div>
+                </div>
+                <div class="card-title">Education</div>
+            </div>
 
-        <div class="card" onclick="openModal('Immersive')">
-            <div class="card-title">Theatre</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M6 6h12v10H6V6zm2 2v6h8V8H8zm-4 8h2v4H4v-4zm14 0h2v4h-2v-4z"/></svg></div>
-        </div>
+            <div class="card" onclick="openModal('Theatre')">
+                <div class="pixel-scene" style="background: #1a1c2c;">
+                    <div style="position: absolute; width: 80%; height: 20px; background: #e03838; left: 10%; bottom: 0; border: 2px solid #000;"></div>
+                    <div style="position: absolute; width: 8px; height: 12px; background: #fff; left: 35%; bottom: 20px; border: 1px solid #000;"></div>
+                </div>
+                <div class="card-title">Theatre</div>
+            </div>
 
-        <div class="card" onclick="openModal('Press')">
-            <div class="card-title">Press</div>
-            <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6zm2 2v8h12V8H6zm3 2h6v4H9v-4zM11 4h2v2h-2V4z"/></svg></div>
+            <div class="card" onclick="openModal('Press')">
+                <div class="pixel-scene" style="background: #cfcfcf;">
+                    <div style="position: absolute; width: 10px; height: 6px; background: #111; left: 40%; top: 35%; border: 1px solid #000;"></div>
+                    <div style="position: absolute; width: 2px; height: 15px; background: #000; left: 44%; top: 41%; border: 1px solid #000;"></div>
+                </div>
+                <div class="card-title">Press</div>
+            </div>
         </div>
     </div>
 
@@ -192,15 +252,15 @@
         <div id="modal-window" onclick="event.stopPropagation()">
             <h2 id="modal-title"></h2>
             <hr>
-            <p id="modal-content">Quest details revealed soon...</p>
-            <button onclick="closeModal()" style="font-family:'VT323'; cursor:pointer;">BACK</button>
+            <p id="modal-content">Quest details are initializing...</p>
+            <button onclick="closeModal()" style="font-family:'VT323'; cursor:pointer; font-size: 1.5rem; text-transform: uppercase;">BACK</button>
         </div>
     </div>
 
     <script>
         const fullText = "Abhishek Lamba is a game designer, writer, performer, and educator. They co-created SHASN:AZADI, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. They have written, designed, and performed in immersive experiences like She Moves Tech, Blood Moon Over Bengaluru, and Half-Life Curse. They are also the creator of Artcade Night, a one of its kind event where they gamify art exhibits. Along with that, they are a co-founder of One Last Rule Club: a community of designers and artists in Bombay. They are proudly non-binary.";
         let i = 0;
-        const speed = 15; // FASTER TYPEWRITER
+        const speed = 10; // BLISTERY FAST
 
         function typeWriter() {
             if (i < fullText.length) {
