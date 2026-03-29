@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek Lamba | Portfolio</title>
+    <title>Abhishek Lamba | RPG Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -108,10 +108,33 @@
 
         /* --- UI & PROGRESS --- */
         #ui-wrapper { margin-top: 25px; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        #prog-container { width: 80%; max-width: 300px; height: 16px; background: rgba(0,0,0,0.2); border: 4px solid #000; margin-bottom: 10px; }
+        
+        #prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        #prog-container { width: 250px; height: 16px; background: rgba(0,0,0,0.2); border: 4px solid #000; }
         #prog-bar { height: 100%; width: 0%; background: var(--grass-green); transition: width 0.4s steps(7); }
-        #prog-label { font-size: 1.3rem; text-transform: uppercase; margin-bottom: 15px; }
-        .instruction-text { font-size: 1.8rem; color: #000; text-transform: uppercase; background: var(--accent); padding: 0 10px; border: 4px solid #000; margin-bottom: 8px; }
+        
+        /* THE TROPHY SYMBOL */
+        #mini-trophy { width: 24px; height: 24px; fill: var(--accent); stroke: #000; stroke-width: 2; display: none; }
+
+        #prog-label { font-size: 1.3rem; text-transform: uppercase; margin-bottom: 10px; }
+        .instruction-text { font-size: 1.8rem; color: #000; text-transform: uppercase; background: var(--accent); padding: 0 10px; border: 4px solid #000; margin-bottom: 15px; }
+
+        /* SAVE GAME BUTTON */
+        #save-btn {
+            background: #fff;
+            border: 4px solid #000;
+            padding: 8px 15px;
+            font-family: 'VT323', monospace;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #save-btn:hover { background: var(--accent); transform: scale(1.05); }
 
         /* --- CARDS --- */
         .hand { display: flex; overflow-x: auto; gap: 15px; width: 100%; padding: 10px 20px; box-sizing: border-box; scrollbar-width: none; }
@@ -125,7 +148,6 @@
         /* --- MODAL --- */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 20px 0; }
         .modal-window { width: 90%; max-width: 850px; background: #fff; border: 8px solid #000; margin: auto; padding: 25px; color: #000; box-shadow: 12px 12px 0 var(--accent); }
-        
         .img-container { width: 100%; background: #111; border: 4px solid #000; margin-bottom: 20px; display: flex; justify-content: center; overflow: hidden; }
         .img-container img { max-width: 100%; max-height: 450px; height: auto; display: block; object-fit: contain; }
 
@@ -145,10 +167,10 @@
         .press-link { display: block; background: #eee; border: 2px solid #000; padding: 12px; color: #000; text-decoration: none; font-size: 1.4rem; text-transform: uppercase; }
         .press-link:hover { background: var(--text-box-red); color: #fff; }
 
-        /* --- MASTERY --- */
+        /* --- MASTERY OVERLAY --- */
         #mastery-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
         .mastery-window { width: 85%; max-width: 450px; background: #000; border: 8px solid #fff; padding: 30px; color: #fff; text-align: center; box-shadow: 15px 15px 0 var(--accent); }
-        .trophy-svg { width: 100px; height: 100px; stroke: var(--accent); margin-bottom: 15px; }
+        .trophy-svg-large { width: 100px; height: 100px; stroke: var(--accent); margin-bottom: 15px; fill: none; stroke-width: 2;}
 
         @media (min-width: 700px) {
             #intro-wrapper { flex-direction: row; align-items: flex-start; }
@@ -156,7 +178,6 @@
             .press-grid { grid-template-columns: 1fr 1fr; }
             #contact-bar { justify-content: flex-start; }
         }
-        @media (min-width: 900px) { .hand { justify-content: center; } }
     </style>
 </head>
 <body>
@@ -189,8 +210,19 @@
     </div>
 
     <div id="ui-wrapper">
-        <div id="prog-container"><div id="prog-bar"></div></div>
+        <div id="prog-row">
+            <div id="prog-container"><div id="prog-bar"></div></div>
+            <svg id="mini-trophy" viewBox="0 0 24 24">
+                <path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34M12 4v10.66M8 4h8v9a4 4 0 01-8 0V4z"/>
+            </svg>
+        </div>
         <div id="prog-label">Exploration Progress: <span id="visited-count">0</span>/7</div>
+        
+        <button id="save-btn" onclick="saveQuest()">
+            <svg class="contact-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Save Quest Data (Resume)
+        </button>
+
         <div class="instruction-text">Select a Card:</div>
     </div>
 
@@ -236,7 +268,7 @@
     <div id="mastery-overlay">
         <div class="mastery-window">
             <div style="color:var(--accent); text-transform:uppercase; font-size:2.2rem; margin-bottom:10px;">Quest Complete!</div>
-            <svg class="trophy-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="trophy-svg-large" viewBox="0 0 24 24">
                 <path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34M12 4v10.66M8 4h8v9a4 4 0 01-8 0V4z"/>
             </svg>
             <div style="font-size: 1.6rem; margin-bottom: 20px;">YOU HAVE UNLOCKED THE FINAL DOSSIER.</div>
@@ -270,7 +302,8 @@
             win: () => {
                 const notes = [523, 659, 783, 1046];
                 notes.forEach((f, i) => setTimeout(() => playSound(f, 'square', 0.6, 0.15), i * 150));
-            }
+            },
+            save: () => playSound(880, 'square', 0.3, 0.1)
         };
 
         const contentData = {
@@ -291,7 +324,13 @@
         let visited = JSON.parse(localStorage.getItem('visited_sections')) || [];
         function updateProgress() {
             document.getElementById('visited-count').innerText = visited.length;
-            document.getElementById('prog-bar').style.width = ((visited.length / 7) * 100) + '%';
+            const progPercent = (visited.length / 7) * 100;
+            document.getElementById('prog-bar').style.width = progPercent + '%';
+            
+            // SHOW TROPHY AT 100%
+            if (visited.length === 7) {
+                document.getElementById('mini-trophy').style.display = "block";
+            }
         }
 
         function openModal(key) {
@@ -319,6 +358,7 @@
                     content.innerHTML = `<div class="img-container"><img src="${section.img}"></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
                 }
                 document.getElementById('modal-overlay').style.display = "block";
+                
                 if (visited.length === 7 && !localStorage.getItem('mastery_achieved')) {
                     setTimeout(() => { sfx.win(); revealMastery(); }, 1200); 
                 }
@@ -329,7 +369,13 @@
         function revealMastery() { document.getElementById('mastery-overlay').style.display = "flex"; localStorage.setItem('mastery_achieved', 'true'); }
         function closeMastery() { document.getElementById('mastery-overlay').style.display = "none"; }
 
-        document.querySelectorAll('.card, .contact-item').forEach(el => el.addEventListener('mouseenter', () => sfx.hover()));
+        function saveQuest() {
+            sfx.save();
+            // Point this to your actual resume file path on GitHub
+            window.open('assets/resume.pdf', '_blank');
+        }
+
+        document.querySelectorAll('.card, .contact-item, #save-btn').forEach(el => el.addEventListener('mouseenter', () => sfx.hover()));
         type();
         updateProgress();
     </script>
