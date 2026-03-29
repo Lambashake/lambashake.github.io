@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek Lamba | Game Designer</title>
+    <title>Abhishek Lamba | Portfolio</title>
     <style>
         :root {
-            --bg: #0d0d0d;
-            --accent: #00ffcc;
-            --text: #ffffff;
+            --bg: #0a0a0a;
+            --accent: #d4af37; /* Gold-tint for a prestige/AZADI feel */
+            --text: #e0e0e0;
+            --card-bg: #1a1a1a;
         }
+
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Garamond', serif; /* More sophisticated for AZADI aesthetic */
             margin: 0;
             padding: 0;
             display: flex;
@@ -21,35 +23,54 @@
             align-items: center;
         }
 
-        /* The XP Bar - Locked to the top so it doesn't interfere */
+        /* XP Bar - Top Fixed */
         #xp-container {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 10px;
+            height: 4px;
             background: #222;
             z-index: 1000;
         }
         #xp-bar {
             height: 100%;
-            width: 30%; /* This can grow as they scroll */
+            width: 0%;
             background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+            transition: width 0.1s;
         }
 
         /* Bio Section */
         #bio-section {
-            max-width: 800px;
-            padding: 60px 20px;
+            max-width: 700px;
+            padding: 100px 20px 40px 20px;
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #333;
         }
-        h1 { color: var(--accent); text-transform: uppercase; }
-        .pronouns { font-style: italic; opacity: 0.7; margin-bottom: 20px; }
+
+        h1 { 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            font-weight: 300;
+            margin-bottom: 5px;
+        }
+
+        .pronouns { 
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            opacity: 0.6; 
+            margin-bottom: 30px; 
+            display: block;
+        }
+
+        strong { color: var(--accent); }
 
         /* Card Section */
         #card-area {
-            margin-top: 40px;
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,34 +79,76 @@
 
         .instruction {
             color: var(--accent);
-            font-weight: bold;
-            margin-bottom: 15px; /* Moves it closer to the cards */
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin-bottom: 5px; /* Very close to the cards */
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .hand {
             display: flex;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
+        /* The SHASN-Inspired Card Style */
         .card {
-            width: 150px;
-            height: 220px;
-            border: 2px solid var(--text);
-            border-radius: 10px;
+            width: 140px;
+            height: 200px;
+            background: var(--card-bg);
+            border: 1px solid #444;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        /* Card Header Detail */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px solid #333;
+            pointer-events: none;
+        }
+
+        .card-title {
+            font-size: 0.7rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            margin-top: 5px;
+            color: var(--accent);
+        }
+
+        .card-icon {
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s, border-color 0.3s;
+            font-size: 2rem;
+            opacity: 0.4;
         }
 
         .card:hover {
-            transform: translateY(-20px);
+            transform: translateY(-15px) scale(1.05);
             border-color: var(--accent);
-            color: var(--accent);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
         }
+
+        .card:hover .card-icon {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -94,9 +157,10 @@
 
     <section id="bio-section">
         <h1>Abhishek Lamba</h1>
-        <p class="pronouns">Game Designer • Writer • Performer • Educator</p>
+        <span class="pronouns">THEY / THEM • DESIGNER • WRITER • PERFORMER • EDUCATOR</span>
+        
         <p>
-            Abhishek Lamba is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. 
+            <strong>Abhishek Lamba</strong> is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. 
         </p>
         <p>
             They have written, designed, and performed in immersive experiences like <em>She Moves Tech</em>, <em>Blood Moon Over Bengaluru</em>, and <em>Half-Life Curse</em>. They are also the creator of <strong>Artcade Night</strong>, a one of its kind event where they gamify art exhibits. 
@@ -109,14 +173,17 @@
     <section id="card-area">
         <div class="instruction">Pick a card from your hand</div>
         <div class="hand">
-            <div class="card">SHASN</div>
-            <div class="card">ARTCADE</div>
-            <div class="card">THE CLUB</div>
+            <div class="card"><div class="card-title">Board Games</div><div class="card-icon">♙</div></div>
+            <div class="card"><div class="card-title">Art</div><div class="card-icon">◈</div></div>
+            <div class="card"><div class="card-title">Community</div><div class="card-icon">⊕</div></div>
+            <div class="card"><div class="card-title">Social Work</div><div class="card-icon">🜲</div></div>
+            <div class="card"><div class="card-title">Education</div><div class="card-icon">📖</div></div>
+            <div class="card"><div class="card-title">Immersive Theatre</div><div class="card-icon">🎭</div></div>
+            <div class="card"><div class="card-title">Press Coverage</div><div class="card-icon">🗞</div></div>
         </div>
     </section>
 
     <script>
-        // Simple scroll-based XP bar logic
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
