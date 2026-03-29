@@ -44,7 +44,7 @@
         #prog-label { font-size: 1.2rem; text-transform: uppercase; margin-bottom: 15px; }
         .instruction-text { font-size: 1.8rem; color: #000; text-transform: uppercase; background: var(--accent); padding: 0 10px; border: 3px solid #000; margin-bottom: 8px; }
 
-        /* --- CARDS & LINE DRAWINGS --- */
+        /* --- CARDS --- */
         .hand { display: flex; overflow-x: auto; gap: 12px; width: 100%; padding: 10px 20px; box-sizing: border-box; scrollbar-width: none; }
         .hand::-webkit-scrollbar { display: none; }
         .card { flex: 0 0 120px; height: 180px; background: #fdf6e3; border: 4px solid #000; padding: 8px; cursor: pointer; transition: transform 0.1s steps(2); box-shadow: 4px 4px 0 rgba(0,0,0,0.3); display: flex; flex-direction: column; }
@@ -53,35 +53,45 @@
         .card-title { font-size: 1rem; text-align: center; text-transform: uppercase; font-weight: bold; border-top: 1px solid #000; padding-top: 5px; margin-top: auto; color: var(--ink); }
         svg { width: 55px; height: 55px; fill: none; stroke: #000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-        /* --- MODAL --- */
+        /* --- MODAL & LOADING --- */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px 0; }
-        .modal-window { width: 90%; max-width: 750px; background: #fff; border: 8px solid #000; margin: auto; padding: 20px; color: #000; box-shadow: 12px 12px 0 var(--accent); }
+        .modal-window { width: 90%; max-width: 850px; background: #fff; border: 8px solid #000; margin: auto; padding: 20px; color: #000; box-shadow: 12px 12px 0 var(--accent); }
+        
+        #loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 4000; flex-direction: column; justify-content: center; align-items: center; color: var(--accent); font-size: 3rem; }
+
+        /* --- PRESS PAGE HERO STYLING --- */
+        .video-hero { width: 100%; position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */ margin-bottom: 30px; border: 6px solid #000; box-shadow: 8px 8px 0 rgba(0,0,0,0.2); }
+        .video-hero iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .press-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
         .img-container { width: 100%; border: 4px solid #000; margin-bottom: 20px; }
         .img-container img { width: 100%; display: block; }
         .label-list { list-style: none; padding: 0; }
         .label-item { border: 2px solid #000; margin-bottom: 12px; padding: 12px; font-size: 1.4rem; line-height: 1.2; display: flex; align-items: flex-start; }
         .label-arrow { color: var(--text-box-red); margin-right: 12px; font-weight: bold; }
-        .press-link { display: block; background: #eee; border: 2px solid #000; padding: 12px; margin-bottom: 8px; color: #000; text-decoration: none; font-size: 1.4rem; }
+        .press-link { display: block; background: #eee; border: 2px solid #000; padding: 12px; color: #000; text-decoration: none; font-size: 1.4rem; text-transform: uppercase; }
         .press-link:hover { background: var(--text-box-red); color: #fff; }
 
-        /* --- MASTERY ACHIEVEMENT POPUP --- */
+        /* --- MASTERY OVERLAY --- */
         #mastery-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
         .mastery-window { width: 85%; max-width: 450px; background: #000; border: 8px solid #fff; padding: 30px; color: #fff; text-align: center; box-shadow: 15px 15px 0 var(--accent); }
-        #achievement-header { color: var(--accent); text-transform: uppercase; font-size: 2.2rem; margin-bottom: 10px; }
         .trophy-svg { width: 100px; height: 100px; stroke: var(--accent); margin-bottom: 15px; }
-        
+
         @media (min-width: 700px) {
             #intro-wrapper { flex-direction: row; align-items: flex-end; }
             #character-portrait { width: 150px; height: 150px; }
+            .press-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (min-width: 900px) { .hand { justify-content: center; } }
     </style>
 </head>
 <body>
 
+    <div id="loading-screen">LOADING QUEST...</div>
+
     <div id="intro-wrapper">
         <div id="character-portrait">
-            <img src="https://via.placeholder.com/150?text=ABHISHEK" alt="Portrait">
+            <img src="assets/portrait.jpg" alt="Abhishek">
         </div>
         <div id="dialogue-container">
             <div id="dialogue-header">Abhishek Lamba</div>
@@ -92,7 +102,7 @@
     <div id="ui-wrapper">
         <div id="prog-container"><div id="prog-bar"></div></div>
         <div id="prog-label">Exploration Progress: <span id="visited-count">0</span>/7</div>
-        <div class="instruction-text">Pick a card to learn more:</div>
+        <div class="instruction-text">Select a Card:</div>
     </div>
 
     <div class="hand">
@@ -100,39 +110,28 @@
             <div class="symbol-box"><svg viewBox="0 0 24 24"><path d="M12 2L8 6h8l-4-4zM7 22h10v-2H7v2zM9 19h6l-1-11H10l-1 11z"/></svg></div>
             <div class="card-title">Board Games</div>
         </div>
-
         <div class="card" onclick="openModal('Art')">
             <div class="symbol-box">
-                <svg viewBox="0 0 24 24">
-                    <path d="M7 22l2-6M17 22l-2-6M12 16v3" />
-                    <path d="M5 4h14v12H5z" />
-                    <path d="M5 14c2-2 4-2 6 0" />
-                    <path d="M10 15c3-4 6-4 9-1" />
-                </svg>
+                <svg viewBox="0 0 24 24"><path d="M7 22l2-6M17 22l-2-6M12 16v3" /><path d="M5 4h14v12H5z" /><path d="M5 14c2-2 4-2 6 0" /><path d="M10 15c3-4 6-4 9-1" /></svg>
             </div>
             <div class="card-title">Art</div>
         </div>
-
         <div class="card" onclick="openModal('Education')">
             <div class="symbol-box"><svg viewBox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 11-6-11-6z"/></svg></div>
             <div class="card-title">Education</div>
         </div>
-
         <div class="card" onclick="openModal('Community')">
             <div class="symbol-box"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
             <div class="card-title">Community</div>
         </div>
-
         <div class="card" onclick="openModal('Immersive Experiences')">
             <div class="symbol-box"><svg viewBox="0 0 24 24"><path d="M11 2L5.5 11h11L11 2zM6 12l-5 8h20l-5-8H6z"/></svg></div>
             <div class="card-title">Immersive Theatre</div>
         </div>
-
         <div class="card" onclick="openModal('Social Work')">
             <div class="symbol-box"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
             <div class="card-title">Social Work</div>
         </div>
-
         <div class="card" onclick="openModal('Press Coverage')">
             <div class="symbol-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
             <div class="card-title">Press</div>
@@ -149,57 +148,61 @@
 
     <div id="mastery-overlay">
         <div class="mastery-window">
-            <div id="achievement-header">Quest Complete!</div>
+            <div style="color:var(--accent); text-transform:uppercase; font-size:2.2rem; margin-bottom:10px;">Quest Complete!</div>
             <svg class="trophy-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34M12 4v10.66M8 4h8v9a4 4 0 01-8 0V4z"/>
             </svg>
-            <div id="achievement-msg" style="font-size: 1.6rem; margin-bottom: 20px;">CONGRATULATIONS! YOU HAVE UNLOCKED THE FINAL DOSSIER.</div>
+            <div style="font-size: 1.6rem; margin-bottom: 20px;">YOU HAVE UNLOCKED THE FINAL DOSSIER.</div>
             <div style="font-size: 2.5rem; background: var(--accent); color: #000; padding: 10px; border: 4px solid #fff; margin-bottom: 25px;">Trophy: Knower of Abhishek</div>
-            <button onclick="closeMastery()" style="font-family:'VT323'; cursor:pointer; font-size: 1.5rem; background:#fff; color:#000; padding: 8px 20px; border:none; text-transform:uppercase;">Continue Adventure</button>
+            <button onclick="closeMastery()" style="font-family:'VT323'; cursor:pointer; font-size: 1.5rem; background:#fff; color:#000; padding: 8px 20px; border:none; text-transform:uppercase;">Continue</button>
         </div>
     </div>
 
     <script>
         const contentData = {
-            "Board Games": { img: "https://via.placeholder.com/600x400?text=SHASN:+AZADI+SPREAD", points: ["A political strategy board game about freedom struggles, in AZADI, you play as revolutionaries fighting against tyrannical imperial powers in an attempt to gain freedom.", "It upends the narrative found across popular media wherein the oppressors are presented as heroes, and instead, places players in the shoes of revolutionaries.", "Funded on Kickstarter, AZADI raised over 200,000$ from backers across the world.", "AZADI also became the first board game ever to win the prestigious Games for Change Award, being recognized for its social impact.", "Ideating this project from scratch, developing the game, and successfully funding it via Kickstarter, - Abhishek served as the co-creator of this project."] },
-            "Art": { img: "https://via.placeholder.com/600x400?text=ARTCADE+NIGHT+POSTER", points: ["For Arcade Night, Abhishek creates games that take the audience on an immersive and interactive journey across an art exhibit's narrative and historical contexts.", "Exploring the intersection of art and play, Artcade Night has evolved into a wonderful tool that can make art accessible and enjoyable for everyone.", "Artcade Night has sold out shows in reputed art galleries across Mumbai including Art+Charlie, Chemould CoLab, and the prestigious CSMVS.", "Bridging the gap between galleries, museums, and common people Artcade Night is proof of the role that gamification can play in spreading art literacy."] },
-            "Education": { img: "https://via.placeholder.com/600x400?text=TEACHING+PHOTO", points: ["Abhishek has worked as an educator and has conducted game design courses at the Indian School of Design and Innovation, and Somaiya College of Design.", "They have created their own curriculum around game design, where students learn by playing, and eventually creating their own games.", "Abhishek’s courses have led to the creation of more than 10 games, proof of their pedagogy’s focus on creating new authors.", "Abhishek has also worked as an educator with a variety of NGOs, with curriculums focusing on art, science, gender, and game design."] },
-            "Community": { img: "https://via.placeholder.com/600x400?text=ONE+LAST+RULE+NIGHT", points: ["One Last Rule Club is a Bombay based community to meet-up, play games & help each other build wonderful things!", "Co-founded in 2023 by Abhishek Lamba and Nidhi Shetty, what started as a way to meet fellow gamers, soon transformed into a community of 80+ members.", "With a monthly game night, Abhishek and their co-founder often come up with their own games for the event.", "With monthly meet-ups since 2023, One Last Rule Club has attracted many members, many of whom are artists, designers, and creators."] },
-            "Immersive Experiences": { img: "https://via.placeholder.com/600x400?text=IMMERSIVE+SET", points: ["Abhishek has written, designed, and acted in in She Moves Tech and Blood Moon Over Bengaluru, immersive theater plays, which has had shows in Delhi and Bangalore.", "She Moves Tech is a science fiction immersive experience set in the near future, exploring the potential consequences of gender biases in AI.", "Blood Moon Over Bengaluru is a queer horror mystery, where the audience must work together to help lift a curse on a queer woman experiencing erasure from the society around her.", "Since April 1, 2019, they have also created and shared a work of art on their page - a daily streak of more than 6 years of creation."] },
-            "Social Work": { img: "https://via.placeholder.com/600x400?text=SOCIAL+WORK+SETTING", points: ["Abhishek served as an artist in residence at the Govandi Arts Festival, where they worked with a small class of girls, teaching them game design, and co-authoring a game called Mohalla with them.", "Abhishek has designed and conducted many workshops with The Gender Lab, exploring gender and patriarchy using the medium of games and storytelling.", "Along with Krupa Foundation, Abhishek has also created a gamified addiction toolkit, designed to help prevent relapse.", "Abhishek has worked with PhilARThropy in Delhi, and Khulaa Aasman in Mumbai, teaching art and science to the kids through a gamified curriculum of their own creation."] },
-            "Press Coverage": { type: "press", video: "https://www.youtube.com/embed/4lUhJdXHriw", links: [{t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432"}, {t: "Interview about Blood Moon Over Bengaluru", l: "https://thenodmag.com/content/blood-moon-over-immersive-play-bengaluru"}, {t: "Interview about Artcade Night", l: "https://www.mid-day.com/mumbai-guide/things-to-do/article/love-art-indulge-in-this-interactive-game-night-to-learn-more-about-paintings-23515186"}, {t: "SHASN: AZADI as a blueprint for semi-cooperative games", l: "https://www.boardgamequest.com/shasn-azadi-preview/"}] }
+            "Board Games": { img: "assets/shasn.jpg", points: ["Co-created SHASN:AZADI, a political strategy game about freedom struggles.", "Funded on Kickstarter, raising over $200,000 from backers globally.", "First board game to win the Games for Change Award for social impact."] },
+            "Art": { img: "assets/artcade.jpg", points: ["Creator of Artcade Night, gamifying art exhibits to make them accessible and engaging.", "Sold-out shows at CSMVS museum and Mumbai galleries like Art+Charlie.", "Bridging the gap between fine art and play."] },
+            "Education": { img: "assets/teaching.jpg", points: ["Taught game design at ISDI and Somaiya College of Design.", "Authored custom curriculum focusing on 'learning by making'.", "Conducted workshops with NGOs on gender, science, and storytelling."] },
+            "Community": { img: "assets/community.jpg", points: ["Co-founded One Last Rule Club in 2023 for Bombay's creative community.", "A monthly hub for designers, artists, and gamers to build and play together.", "Grown to 80+ active members."] },
+            "Immersive Experiences": { img: "assets/immersive.jpg", points: ["Writer/Performer in 'She Moves Tech' (AI bias) and 'Blood Moon Over Bengaluru' (Queer horror).", "Six-year daily art streak (ongoing since April 1, 2019).", "Specializing in interactive narrative structures."] },
+            "Social Work": { img: "assets/social.jpg", points: ["Artist in Residence at Govandi Arts Festival, co-authoring the game 'Mohalla'.", "Designed gamified addiction toolkits with Krupa Foundation.", "Facilitated workshops exploring patriarchy with The Gender Lab."] },
+            "Press Coverage": { type: "press", video: "https://www.youtube.com/embed/4lUhJdXHriw", links: [{t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432"}, {t: "Interview about Blood Moon", l: "https://thenodmag.com/content/blood-moon-over-immersive-play-bengaluru"}, {t: "Interview about Artcade Night", l: "https://www.mid-day.com/mumbai-guide/things-to-do/article/love-art-indulge-in-this-interactive-game-night-to-learn-more-about-paintings-23515186"}, {t: "Semi-cooperative blueprint", l: "https://www.boardgamequest.com/shasn-azadi-preview/"}] }
         };
 
-        const fullBioText = "Abhishek Lamba is a game designer, writer, performer, and educator. They co-created SHASN:AZADI, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. They have written, designed, and performed in immersive experiences like She Moves Tech, Blood Moon Over Bengaluru, and Half-Life Curse. They are also the creator of Artcade Night, a one of its kind event where they gamify art exhibits. Along with that, they are a co-founder of One Last Rule Club: a community of designers and artists in Bombay. They are proudly non-binary.";
-        
+        const fullBioText = "Abhishek Lamba is a game designer, writer, and educator. They co-created the award-winning SHASN:AZADI and specialize in immersive theater and gamified art exhibits. They are the co-founder of One Last Rule Club and are proudly non-binary.";
         let j = 0;
-        function type() { if (j < fullBioText.length) { document.getElementById('bio-text').innerHTML += fullBioText.charAt(j); j++; setTimeout(type, 8); } }
+        function type() { if (j < fullBioText.length) { document.getElementById('bio-text').innerHTML += fullBioText.charAt(j); j++; setTimeout(type, 10); } }
 
         let visited = JSON.parse(localStorage.getItem('visited_sections')) || [];
         function updateProgress() {
-            const currentCount = visited.length;
-            document.getElementById('visited-count').innerText = currentCount;
-            document.getElementById('prog-bar').style.width = ((currentCount / 7) * 100) + '%';
+            document.getElementById('visited-count').innerText = visited.length;
+            document.getElementById('prog-bar').style.width = ((visited.length / 7) * 100) + '%';
         }
 
         function openModal(key) {
-            if (!visited.includes(key)) {
-                visited.push(key);
-                localStorage.setItem('visited_sections', JSON.stringify(visited));
-                updateProgress();
-            }
-            const section = contentData[key];
-            const content = document.getElementById('modal-content');
-            document.getElementById('modal-title').innerText = key;
-            if (section.type === "press") {
-                content.innerHTML = `<div class="video-container"><iframe src="${section.video}" frameborder="0" allowfullscreen></iframe></div>` + section.links.map(link => `<a href="${link.l}" class="press-link" target="_blank">${link.t}</a>`).join('');
-            } else {
-                content.innerHTML = `<div class="img-container"><img src="${section.img}"></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
-            }
-            document.getElementById('modal-overlay').style.display = "block";
-            if (visited.length === 7 && !localStorage.getItem('mastery_achieved')) {
-                setTimeout(revealMastery, 1000); 
-            }
+            document.getElementById('loading-screen').style.display = 'flex';
+            
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                if (!visited.includes(key)) {
+                    visited.push(key);
+                    localStorage.setItem('visited_sections', JSON.stringify(visited));
+                    updateProgress();
+                }
+                const section = contentData[key];
+                const content = document.getElementById('modal-content');
+                document.getElementById('modal-title').innerText = key;
+
+                if (section.type === "press") {
+                    content.innerHTML = `<div class="video-hero"><iframe src="${section.video}" frameborder="0" allowfullscreen></iframe></div><div class="press-grid">` + section.links.map(link => `<a href="${link.l}" class="press-link" target="_blank">${link.t}</a>`).join('') + `</div>`;
+                } else {
+                    content.innerHTML = `<div class="img-container"><img src="${section.img}"></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
+                }
+                document.getElementById('modal-overlay').style.display = "block";
+                if (visited.length === 7 && !localStorage.getItem('mastery_achieved')) {
+                    setTimeout(revealMastery, 1200); 
+                }
+            }, 600); // 0.6s Loading animation
         }
 
         function closeModal() { document.getElementById('modal-overlay').style.display = "none"; }
