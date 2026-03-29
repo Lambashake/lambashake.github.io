@@ -102,7 +102,7 @@
         </div>
         <div class="card" onclick="openModal('Art')">
             <div class="symbol-box">
-                <svg viewBox="0 0 24 24"><path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm0-18c-4.41 0-8 3.59-8 8s3.59 8 8 8 8-3.59 8-8-3.59-8-8-8z"/><circle cx="7.5" cy="10.5" r="1.5"/><circle cx="10.5" cy="7.5" r="1.5"/><circle cx="13.5" cy="7.5" r="1.5"/><circle cx="16.5" cy="10.5" r="1.5"/><path d="M12 18a6 6 0 01-5-3"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M4 17h16v4H4v-4zM12 2l-2 5h4l-2-5zm7 15l-1-10H6l-1 10h14z"/><path d="M8 12a2 2 0 014 0c0-1.1 2.24-2 5-2"/></svg>
             </div>
             <div class="card-title">Art</div>
         </div>
@@ -170,9 +170,6 @@
             const currentCount = visited.length;
             document.getElementById('visited-count').innerText = currentCount;
             document.getElementById('prog-bar').style.width = ((currentCount / 7) * 100) + '%';
-            if (currentCount === 7 && !localStorage.getItem('mastery_achieved')) {
-                setTimeout(revealMastery, 600);
-            }
         }
 
         function openModal(key) {
@@ -190,6 +187,12 @@
                 content.innerHTML = `<div class="img-container"><img src="${section.img}"></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
             }
             document.getElementById('modal-overlay').style.display = "block";
+
+            // Check for Mastery (Show Trophy AFTER main modal opens)
+            if (visited.length === 7 && !localStorage.getItem('mastery_achieved')) {
+                // Delay trophy by 1s so they can see the final content card first
+                setTimeout(revealMastery, 1000); 
+            }
         }
 
         function closeModal() { document.getElementById('modal-overlay').style.display = "none"; }
