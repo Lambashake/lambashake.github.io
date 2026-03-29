@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -5,20 +6,22 @@
     <title>Abhishek Lamba | Game Designer</title>
     <style>
         :root {
-            --tabletop: #121212;
-            --felt: radial-gradient(circle, #1a1a1a 0%, #050505 100%);
+            --tabletop: #0a0a0a;
             --accent: #d4af37; 
-            --card-white: #f4f1ea; /* "Ivory" cardstock color */
+            --card-white: #fcfaf5;
             --ink: #1a1a1a;
+            --paper-texture: url('https://www.transparenttextures.com/patterns/graphy.png');
         }
 
         body {
             background: var(--tabletop);
-            background-image: var(--felt);
-            color: #ccc;
+            /* Background texture to look like a premium game mat */
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%), 
+                              url('https://www.transparenttextures.com/patterns/dark-leather.png');
+            color: #eee;
             font-family: 'Garamond', serif;
             margin: 0;
-            overflow-x: hidden;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -28,155 +31,169 @@
         /* Influence Tracker (XP Bar) */
         #tracker-container {
             position: fixed;
-            top: 20px;
-            width: 80%;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #333;
+            top: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.05);
             z-index: 1000;
         }
         #tracker-bar {
             height: 100%;
             width: 0%;
             background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
-            transition: width 0.2s ease-out;
+            box-shadow: 0 0 15px var(--accent);
         }
 
-        /* Briefing Section (Bio) */
+        /* The "Campaign Briefing" (Bio Section) */
+        #main-scroll-area {
+            width: 100%;
+            max-width: 800px;
+            padding-top: 60px;
+            padding-bottom: 350px; /* Space for the cards at the bottom */
+            box-sizing: border-box;
+        }
+
         #briefing {
-            max-width: 650px;
-            margin-top: 80px;
-            padding: 40px;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid #333;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            text-align: center;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid #222;
+            padding: 50px;
             line-height: 1.8;
+            font-size: 1.15rem;
             position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
 
-        /* Decorative Corners like a Game Box */
-        #briefing::before, #briefing::after {
-            content: '';
+        #briefing::before {
+            content: 'CAMPAIGN OVERVIEW';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
+            top: -10px;
+            left: 20px;
+            background: var(--tabletop);
+            padding: 0 10px;
+            color: var(--accent);
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
         }
-        #briefing::before { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
-        #briefing::after { bottom: -5px; right: -5px; border-left: 0; border-top: 0; }
 
         h1 { 
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #fff; 
             text-transform: uppercase; 
-            letter-spacing: 8px; 
-            margin-bottom: 0;
+            letter-spacing: 10px; 
+            margin: 0;
+            font-weight: 300;
         }
 
         .pronouns { 
             font-family: 'Courier New', monospace;
             font-size: 0.8rem;
             color: var(--accent);
-            letter-spacing: 3px;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            display: block;
         }
 
-        /* Player Hand Section */
-        #player-hand-area {
+        strong { color: var(--accent); font-weight: normal; border-bottom: 1px solid rgba(212, 175, 55, 0.3); }
+
+        /* Fixed Footer for Cards (The Player's Hand) */
+        #hand-container {
             position: fixed;
-            bottom: -50px; /* Tucked away like a real hand */
+            bottom: 0;
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            transition: bottom 0.5s ease;
-        }
-
-        #player-hand-area:hover {
-            bottom: 20px; /* Pulls hand up on hover */
+            z-index: 900;
         }
 
         .instruction {
             color: var(--accent);
             font-family: 'Courier New', monospace;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            background: rgba(0,0,0,0.8);
-            padding: 5px 15px;
-            border-radius: 20px;
         }
 
         .hand {
             display: flex;
             justify-content: center;
-            height: 300px;
-            width: 100%;
+            width: 90%;
+            perspective: 1000px;
         }
 
-        /* SHASN-Inspired Cards */
+        /* SHASN-Style Card Design */
         .card {
-            width: 160px;
-            height: 240px;
+            width: 140px;
+            height: 210px;
             background-color: var(--card-white);
-            background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'); /* Linen texture filter */
-            border-radius: 8px;
-            border: 6px solid var(--card-white);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
-            margin-left: -40px; /* Overlap like a real hand */
+            background-image: var(--paper-texture);
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            margin-left: -30px; /* Card overlap */
             color: var(--ink);
             display: flex;
             flex-direction: column;
-            padding: 15px;
-            transition: all 0.3s ease;
-            position: relative;
+            padding: 12px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             transform-origin: bottom center;
+            cursor: pointer;
         }
 
-        /* Fan the cards out */
-        .card:nth-child(1) { transform: rotate(-15deg) translateY(20px); }
-        .card:nth-child(2) { transform: rotate(-10deg) translateY(10px); }
-        .card:nth-child(3) { transform: rotate(-5deg) translateY(5px); }
-        .card:nth-child(4) { transform: rotate(0deg); }
-        .card:nth-child(5) { transform: rotate(5deg) translateY(5px); }
-        .card:nth-child(6) { transform: rotate(10deg) translateY(10px); }
-        .card:nth-child(7) { transform: rotate(15deg) translateY(20px); }
-
         .card:hover {
-            transform: translateY(-80px) rotate(0deg) scale(1.1) !important;
-            z-index: 100;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            transform: translateY(-50px) scale(1.1) rotate(0deg) !important;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
             border-color: var(--accent);
         }
 
-        .card-inner-border {
-            border: 1px solid #ddd;
+        /* Card Fan Rotations */
+        .card:nth-child(1) { transform: rotate(-12deg); }
+        .card:nth-child(2) { transform: rotate(-8deg); }
+        .card:nth-child(3) { transform: rotate(-4deg); }
+        .card:nth-child(4) { transform: rotate(0deg); }
+        .card:nth-child(5) { transform: rotate(4deg); }
+        .card:nth-child(6) { transform: rotate(8deg); }
+        .card:nth-child(7) { transform: rotate(12deg); }
+
+        .card-inner {
+            border: 1px solid rgba(0,0,0,0.1);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            padding: 10px;
+            padding: 5px;
         }
 
         .card-title {
-            font-family: 'Garamond', serif;
-            font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             text-align: center;
             text-transform: uppercase;
-            border-bottom: 2px solid var(--ink);
-            padding-bottom: 8px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 5px;
             margin-bottom: 15px;
         }
 
+        /* SVG Icon Styling */
         .card-icon {
             flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            filter: grayscale(1);
+        }
+
+        .card-icon svg {
+            width: 50px;
+            height: 50px;
+            fill: none;
+            stroke: var(--ink);
+            stroke-width: 1.5;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -184,25 +201,33 @@
 
     <div id="tracker-container"><div id="tracker-bar"></div></div>
 
-    <section id="briefing">
-        <h1>Abhishek Lamba</h1>
-        <span class="pronouns">THEY / THEM • DESIGNER • WRITER • PERFORMER</span>
-        
-        <p><strong>Abhishek Lamba</strong> is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change.</p>
-        <p>They have written, designed, and performed in immersive experiences like <em>She Moves Tech</em>, <em>Blood Moon Over Bengaluru</em>, and <em>Half-Life Curse</em>. They are also the creator of <strong>Artcade Night</strong>, a one of its kind event where they gamify art exhibits.</p>
-        <p>Along with that, they are a co-founder of <strong>One Last Rule Club</strong>: a community of designers and artists in Bombay. They are proudly non-binary.</p>
-    </section>
+    <div id="main-scroll-area">
+        <section id="briefing">
+            <h1>Abhishek Lamba</h1>
+            <span class="pronouns">THEY / THEM • DESIGNER • WRITER • PERFORMER</span>
+            
+            <p><strong>Abhishek Lamba</strong> is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change.</p>
+            <p>They have written, designed, and performed in immersive experiences like <em>She Moves Tech</em>, <em>Blood Moon Over Bengaluru</em>, and <em>Half-Life Curse</em>. They are also the creator of <strong>Artcade Night</strong>, a one of its kind event where they gamify art exhibits.</p>
+            <p>Along with that, they are a co-founder of <strong>One Last Rule Club</strong>: a community of designers and artists in Bombay. They are proudly non-binary.</p>
+        </section>
+    </div>
 
-    <div id="player-hand-area">
+    <div id="hand-container">
         <div class="instruction">Pick a card from your hand</div>
         <div class="hand">
-            <div class="card"><div class="card-inner-border"><div class="card-title">Board Games</div><div class="card-icon">♙</div></div></div>
-            <div class="card"><div class="card-inner-border"><div class="card-title">Art</div><div class="card-icon">◈</div></div></div>
-            <div class="card"><div class="card-inner-border"><div class="card-title">Community</div><div class="card-icon">⊕</div></div></div>
-            <div class="card"><div class="card-inner-border"><div class="card-title">Social Work</div><div class="card-icon">🜲</div></div></div>
-            <div class="card"><div class="card-inner-border"><div class="card-title">Education</div><div class="card-icon">📖</div></div></div>
-            <div class="card"><div class="card-inner-border"><div class="card-title">Immersive Theatre</div><div class="card-icon">🎭</div></div></div>
-            <div class="card"><div class="card-inner-border"><div class="card-title">Press Coverage</div><div class="card-icon">🗞</div></div></div>
+            <div class="card"><div class="card-inner"><div class="card-title">Board Games</div><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2L8 6h8l-4-4zM7 22h10v-2H7v2zM12 6c-2.21 0-4 1.79-4 4 0 1.5.82 2.81 2.05 3.5L8 20h8l-2.05-6.5c1.23-.69 2.05-2 2.05-3.5 0-2.21-1.79-4-4-4z"/></svg></div></div></div>
+            
+            <div class="card"><div class="card-inner"><div class="card-title">Art</div><div class="card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M3 12c0 4.97 4.03 9 9 9s9-4.03 9-9-4.03-9-9-9-9 4.03-9 9z"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div></div></div>
+            
+            <div class="card"><div class="card-inner"><div class="card-title">Community</div><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M12 7l0 10"/><path d="M7 12l10 0"/></svg></div></div></div>
+            
+            <div class="card"><div class="card-inner"><div class="card-title">Social Work</div><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M20 19l-5-14-5 14M4 19l5-14 5 14M2 19h20"/></svg></div></div></div>
+            
+            <div class="card"><div class="card-inner"><div class="card-title">Education</div><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div></div></div>
+            
+            <div class="card"><div class="card-inner"><div class="card-title">Immersive Theatre</div><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6v12M6 12h12"/></svg></div></div></div>
+            
+            <div class="card"><div class="card-inner"><div class="card-title">Press</div><div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06z"/></svg></div></div></div>
         </div>
     </div>
 
