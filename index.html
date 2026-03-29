@@ -3,33 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Game Designer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Abhishek Lamba | Game Designer</title>
+    <style>
+        :root {
+            --bg: #0d0d0d;
+            --accent: #00ffcc;
+            --text: #ffffff;
+        }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* The XP Bar - Locked to the top so it doesn't interfere */
+        #xp-container {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 10px;
+            background: #222;
+            z-index: 1000;
+        }
+        #xp-bar {
+            height: 100%;
+            width: 30%; /* This can grow as they scroll */
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Bio Section */
+        #bio-section {
+            max-width: 800px;
+            padding: 60px 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        h1 { color: var(--accent); text-transform: uppercase; }
+        .pronouns { font-style: italic; opacity: 0.7; margin-bottom: 20px; }
+
+        /* Card Section */
+        #card-area {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 100px;
+        }
+
+        .instruction {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 15px; /* Moves it closer to the cards */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hand {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card {
+            width: 150px;
+            height: 220px;
+            border: 2px solid var(--text);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-20px);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
 
-    <div id="hud">
-        <div class="xp-container">
-            <span>EXPLORATION XP</span>
-            <div class="bar-bg">
-                <div id="xp-fill" style="width: 0%"></div>
-            </div>
-            <span id="xp-text">0/7 Cards Discovered</span>
+    <div id="xp-container"><div id="xp-bar"></div></div>
+
+    <section id="bio-section">
+        <h1>Abhishek Lamba</h1>
+        <p class="pronouns">Game Designer • Writer • Performer • Educator</p>
+        <p>
+            Abhishek Lamba is a game designer, writer, performer, and educator. They co-created <strong>SHASN:AZADI</strong>, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. 
+        </p>
+        <p>
+            They have written, designed, and performed in immersive experiences like <em>She Moves Tech</em>, <em>Blood Moon Over Bengaluru</em>, and <em>Half-Life Curse</em>. They are also the creator of <strong>Artcade Night</strong>, a one of its kind event where they gamify art exhibits. 
+        </p>
+        <p>
+            Along with that, they are a co-founder of <strong>One Last Rule Club</strong>: a community of designers and artists in Bombay. They are proudly non-binary.
+        </p>
+    </section>
+
+    <section id="card-area">
+        <div class="instruction">Pick a card from your hand</div>
+        <div class="hand">
+            <div class="card">SHASN</div>
+            <div class="card">ARTCADE</div>
+            <div class="card">THE CLUB</div>
         </div>
-    </div>
+    </section>
 
-    <main id="tabletop">
-        <h1 class="instruction">Select a card from your hand...</h1>
-        
-        <div id="card-hand">
-            </div>
-    </main>
+    <script>
+        // Simple scroll-based XP bar logic
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("xp-bar").style.width = scrolled + "%";
+        };
+    </script>
 
-    <div id="overlay" class="hidden">
-        <button id="close-btn">← Back to Hand</button>
-        <div id="content-area"></div>
-    </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
