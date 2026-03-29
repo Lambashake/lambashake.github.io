@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek Lamba | Strategy Guide</title>
+    <title>Abhishek Lamba | 8-Bit Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1c2c;
-            --panel: #f4f1ea;
-            --accent: #e03838;
-            --gb-dark: #081820;
-            --text: #111;
+            --sky-blue: #a8e0e0;
+            --grass-green: #78c850;
+            --path-brown: #f8b8a0;
+            --text-box-red: #e03838;
+            --accent: #f8d030;
         }
 
         body {
-            background-color: var(--bg);
-            background-image: radial-gradient(#29366f 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: #fff;
+            background-color: var(--path-brown);
+            background-image: linear-gradient(0deg, #edac92 1px, transparent 1px),
+                              linear-gradient(90deg, #edac92 1px, transparent 1px);
+            background-size: 16px 16px;
             font-family: 'VT323', monospace;
             margin: 0;
             display: flex;
@@ -28,221 +28,194 @@
         }
 
         /* --- POKEMON DIALOGUE BOX --- */
-        #main-header {
-            width: 90%; max-width: 700px;
-            margin: 20px 0;
-            background: #fff;
-            border: 4px solid #000;
-            border-radius: 4px;
-            color: #000;
-            padding: 15px;
-            box-shadow: 4px 4px 0 #000;
+        #dialogue-container {
+            width: 95%; max-width: 700px;
+            margin: 20px 0; background: #fff;
+            border: 5px solid #000; border-radius: 8px;
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.5);
+            position: relative; min-height: 160px; overflow: hidden;
         }
-        #bio-text { font-size: 1.5rem; line-height: 1.1; text-transform: uppercase; }
 
-        /* --- CARD HAND --- */
+        #dialogue-header {
+            height: 25px; background: var(--text-box-red);
+            border-bottom: 5px solid #000; display: flex;
+            align-items: center; padding: 0 10px; color: #fff;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        #bio-text { padding: 15px; font-size: 1.6rem; line-height: 1.1; text-transform: uppercase; color: #111; }
+
+        /* --- CARDS --- */
         .hand {
-            display: flex; gap: 10px; overflow-x: auto;
-            width: 100%; padding: 20px; justify-content: flex-start;
+            display: flex; overflow-x: auto; gap: 12px;
+            width: 100%; padding: 20px; box-sizing: border-box;
             scrollbar-width: none;
         }
         .hand::-webkit-scrollbar { display: none; }
 
         .card {
-            flex: 0 0 100px; height: 140px;
-            background: var(--panel); border: 3px solid #000;
-            color: #000; padding: 5px; cursor: pointer;
-            text-align: center; font-size: 0.9rem;
+            flex: 0 0 120px; height: 180px;
+            background: #fdf6e3; border: 4px solid #000;
+            padding: 8px; cursor: pointer; transition: all 0.1s steps(2);
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
         }
-        .card:hover { background: var(--accent); color: #fff; }
+        .card:hover { background: var(--accent); transform: translateY(-10px); }
 
-        /* --- MODAL / STRATEGY GUIDE WINDOW --- */
+        .pixel-scene { width: 100%; height: 100px; border: 2px solid #000; margin-bottom: 5px; position: relative; overflow: hidden; }
+
+        .card-title { font-size: 1rem; text-align: center; text-transform: uppercase; font-weight: bold; border-top: 1px solid #000; padding-top: 5px; }
+
+        /* --- MODAL WINDOW --- */
         #modal-overlay {
             display: none; position: fixed; top: 0; left: 0;
             width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-            z-index: 1000; overflow-y: auto;
-            padding: 20px 0;
+            z-index: 2000; overflow-y: auto; padding: 20px 0;
         }
 
-        .guide-window {
-            width: 90%; max-width: 900px;
-            background: var(--panel); border: 8px solid #000;
-            margin: auto; padding: 20px; color: var(--text);
-            position: relative; box-shadow: 10px 10px 0 var(--accent);
+        .modal-window {
+            width: 90%; max-width: 750px;
+            background: #fff; border: 8px solid #000;
+            margin: auto; padding: 20px; color: #000;
+            box-shadow: 12px 12px 0 var(--accent);
         }
 
-        .close-btn { 
-            float: right; cursor: pointer; font-size: 2rem; 
-            background: #000; color: #fff; padding: 0 10px;
-        }
+        .img-container { width: 100%; border: 4px solid #000; margin-bottom: 20px; background: #eee; }
+        .img-container img { width: 100%; display: block; }
 
-        /* --- IMAGE & LABELS (THE ARROWS) --- */
-        .guide-content {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 20px; margin-top: 20px;
-        }
-
-        .image-container {
-            width: 100%; max-width: 500px;
-            border: 4px solid #000; position: relative;
-        }
-
-        .main-img { width: 100%; display: block; filter: contrast(1.1); }
-
-        /* Labels */
-        .labels-list { width: 100%; list-style: none; padding: 0; }
+        .label-list { list-style: none; padding: 0; }
         .label-item {
-            background: #fff; border: 2px solid #000;
-            margin-bottom: 10px; padding: 10px;
-            font-size: 1.3rem; position: relative;
+            border: 2px solid #000; margin-bottom: 12px;
+            padding: 12px; font-size: 1.4rem; line-height: 1.2;
+            display: flex; align-items: flex-start;
         }
-        .label-num {
-            background: var(--accent); color: #fff;
-            padding: 0 8px; margin-right: 10px;
-        }
+        .label-arrow { color: var(--text-box-red); margin-right: 12px; font-weight: bold; }
 
-        /* --- PRESS STYLING --- */
-        .video-wrapper { width: 100%; aspect-ratio: 16/9; border: 4px solid #000; }
-        .article-link {
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; border: 4px solid #000; margin-bottom: 20px; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .press-link {
             display: block; background: #eee; border: 2px solid #000;
-            padding: 10px; margin-bottom: 5px; text-decoration: none;
-            color: #000; font-size: 1.4rem;
+            padding: 12px; margin-bottom: 8px; color: #000; text-decoration: none;
+            font-size: 1.4rem;
         }
-        .article-link:hover { background: var(--accent); color: #fff; }
+        .press-link:hover { background: var(--text-box-red); color: #fff; }
 
-        /* DESKTOP: ARROW EFFECT (Optional/Visual enhancement) */
-        @media (min-width: 800px) {
-            .guide-content { flex-direction: row; align-items: flex-start; }
-            .label-item::before {
-                content: '←'; position: absolute; left: -25px; top: 10px;
-                font-weight: bold; color: var(--accent);
-            }
-        }
+        @media (min-width: 900px) { .hand { justify-content: center; } }
     </style>
 </head>
 <body>
 
-    <div id="main-header">
-        <div id="bio-text">Abhishek Lamba: Game Designer, Writer, Performer. [INITIATING PORTFOLIO...]</div>
+    <div id="dialogue-container">
+        <div id="dialogue-header">Abhishek Lamba</div>
+        <div id="bio-text"></div>
     </div>
 
-    <div class="hand" id="hand">
-        <div class="card" onclick="openModal('Board Games')">BOARD GAMES</div>
-        <div class="card" onclick="openModal('Art')">ART</div>
-        <div class="card" onclick="openModal('Education')">EDUCATION</div>
-        <div class="card" onclick="openModal('Community')">COMMUNITY</div>
-        <div class="card" onclick="openModal('Immersive')">IMMERSIVE</div>
-        <div class="card" onclick="openModal('Social Work')">SOCIAL WORK</div>
-        <div class="card" onclick="openModal('Press')">PRESS</div>
+    <div class="hand">
+        <div class="card" onclick="openModal('Board Games')"><div class="pixel-scene" style="background:var(--path-brown)"></div><div class="card-title">Board Games</div></div>
+        <div class="card" onclick="openModal('Art')"><div class="pixel-scene" style="background:#e0f8cf"></div><div class="card-title">Art</div></div>
+        <div class="card" onclick="openModal('Education')"><div class="pixel-scene" style="background:#cfcfcf"></div><div class="card-title">Education</div></div>
+        <div class="card" onclick="openModal('Community')"><div class="pixel-scene" style="background:var(--grass-green)"></div><div class="card-title">Community</div></div>
+        <div class="card" onclick="openModal('Immersive Experiences')"><div class="pixel-scene" style="background:#1a1c2c"></div><div class="card-title">Immersive</div></div>
+        <div class="card" onclick="openModal('Social Work')"><div class="pixel-scene" style="background:#f8e8b0"></div><div class="card-title">Social Work</div></div>
+        <div class="card" onclick="openModal('Press Coverage')"><div class="pixel-scene" style="background:#cfcfcf"></div><div class="card-title">Press</div></div>
     </div>
 
-    <div id="modal-overlay">
-        <div class="guide-window">
-            <span class="close-btn" onclick="closeModal()">X</span>
-            <h1 id="modal-title" style="text-transform: uppercase; margin: 0;"></h1>
-            <div id="modal-body" class="guide-content">
-                </div>
+    <div id="modal-overlay" onclick="closeModal()">
+        <div class="modal-window" onclick="event.stopPropagation()">
+            <h2 id="modal-title" style="text-transform: uppercase; margin: 0 0 20px 0; font-size: 2.2rem; border-bottom: 4px solid #000;"></h2>
+            <div id="modal-content"></div>
+            <button onclick="closeModal()" style="font-family:'VT323'; cursor:pointer; font-size: 1.5rem; margin-top: 15px; background:#000; color:#fff; border:none; padding: 5px 15px;">CLOSE</button>
         </div>
     </div>
 
     <script>
-        const data = {
+        const contentData = {
             "Board Games": {
-                img: "https://via.placeholder.com/500x300?text=SHASN+AZADI+SPREAD",
+                img: "https://via.placeholder.com/600x400?text=SHASN:+AZADI+SPREAD",
                 points: [
-                    "A political strategy game about freedom struggles. Play as revolutionaries fighting tyrannical imperial powers.",
-                    "Upends traditional narratives: oppressors aren't heroes; players are the revolutionaries.",
-                    "Funded on Kickstarter: raised over $200,000 from global backers.",
-                    "First board game to win the Games for Change Award for social impact.",
-                    "Abhishek served as Co-Creator: from initial ideation to Kickstarter fulfillment."
+                    "A political strategy board game about freedom struggles, in AZADI, you play as revolutionaries fighting against tyrannical imperial powers in an attempt to gain freedom.",
+                    "It upends the narrative found across popular media wherein the oppressors are presented as heroes, and instead, places players in the shoes of revolutionaries.",
+                    "Funded on Kickstarter, AZADI raised over 200,000$ from backers across the world.",
+                    "AZADI also became the first board game ever to win the prestigious Games for Change Award, being recognized for its social impact.",
+                    "Ideating this project from scratch, developing the game, and successfully funding it via Kickstarter, - Abhishek served as the co-creator of this project."
                 ]
             },
             "Art": {
-                img: "https://via.placeholder.com/500x300?text=ARTCADE+NIGHT+POSTER",
+                img: "https://via.placeholder.com/600x400?text=ARTCADE+NIGHT+POSTER",
                 points: [
-                    "Games that lead audiences through an exhibit's narrative and historical contexts.",
-                    "Artcade Night makes fine art accessible and enjoyable through play.",
-                    "Sold out shows at Art+Charlie, Chemould CoLab, and CSMVS Mumbai.",
-                    "A bridge between galleries and people through strategic gamification."
+                    "For Arcade Night, Abhishek creates games that take the audience on an immersive and interactive journey across an art exhibit's narrative and historical contexts.",
+                    "Exploring the intersection of art and play, Artcade Night has evolved into a wonderful tool that can make art accessible and enjoyable for everyone.",
+                    "Artcade Night has sold out shows in reputed art galleries across Mumbai including Art+Charlie, Chemould CoLab, and the prestigious CSMVS.",
+                    "Bridging the gap between galleries, museums, and common people Artcade Night is proof of the role that gamification can play in spreading art literacy."
                 ]
             },
             "Education": {
-                img: "https://via.placeholder.com/500x300?text=CLASSROOM+SETTING",
+                img: "https://via.placeholder.com/600x400?text=TEACHING+PHOTO",
                 points: [
-                    "Conducted courses at Indian School of Design & Innovation and Somaiya College.",
-                    "Custom curriculum: Students learn by playing, then by creating.",
-                    "Produced over 10 student-authored games, proving the 'Author-focused' pedagogy.",
-                    "Collaborated with NGOs on art, science, gender, and game design modules."
+                    "Abhishek has worked as an educator and has conducted game design courses at the Indian School of Design and Innovation, and Somaiya College of Design.",
+                    "They have created their own curriculum around game design, where students learn by playing, and eventually creating their own games.",
+                    "Abhishek’s courses have led to the creation of more than 10 games, proof of their pedagogy’s focus on creating new authors.",
+                    "Abhishek has also worked as an educator with a variety of NGOs, with curriculums focusing on art, science, gender, and game design."
                 ]
             },
             "Community": {
-                img: "https://via.placeholder.com/500x300?text=ONE+LAST+RULE+NIGHT",
+                img: "https://via.placeholder.com/600x400?text=ONE+LAST+RULE+NIGHT",
                 points: [
-                    "One Last Rule Club: A Bombay hub for artists and creators to play and build.",
-                    "Founded in 2023 with Nidhi Shetty; now a community of 80+ members.",
-                    "Monthly game nights often feature custom-designed games by the founders.",
-                    "Attracts a diverse mix of designers, artists, and creative thinkers."
+                    "One Last Rule Club is a Bombay based community to meet-up, play games & help each other build wonderful things!",
+                    "Co-founded in 2023 by Abhishek Lamba and Nidhi Shetty, what started as a way to meet fellow gamers, soon transformed into a community of 80+ members.",
+                    "With a monthly game night, Abhishek and their co-founder often come up with their own games for the event.",
+                    "With monthly meet-ups since 2023, One Last Rule Club has attracted many members, many of whom are artists, designers, and creators."
                 ]
             },
-            "Immersive": {
-                img: "https://via.placeholder.com/500x300?text=IMMERSIVE+SET",
+            "Immersive Experiences": {
+                img: "https://via.placeholder.com/600x400?text=IMMERSIVE+SET",
                 points: [
-                    "Writer/Designer/Actor for 'She Moves Tech' and 'Blood Moon Over Bengaluru'.",
-                    "She Moves Tech: Sci-fi exploring gender biases in Artificial Intelligence.",
-                    "Blood Moon: A queer horror mystery regarding erasure and community cooperation.",
-                    "A 6-year daily streak of art creation started on April 1, 2019."
+                    "Abhishek has written, designed, and acted in in She Moves Tech and Blood Moon Over Bengaluru, immersive theater plays, which has had shows in Delhi and Bangalore.",
+                    "She Moves Tech is a science fiction immersive experience set in the near future, exploring the potential consequences of gender biases in AI.",
+                    "Blood Moon Over Bengaluru is a queer horror mystery, where the audience must work together to help lift a curse on a queer woman experiencing erasure from the society around her.",
+                    "Since April 1, 2019, they have also created and shared a work of art on their page - a daily streak of more than 6 years of creation."
                 ]
             },
             "Social Work": {
-                img: "https://via.placeholder.com/500x300?text=SOCIAL+WORK+CLASS",
+                img: "https://via.placeholder.com/600x400?text=SOCIAL+WORK+SETTING",
                 points: [
-                    "Govandi Arts Festival: Co-authored 'Mohalla' with a class of young female designers.",
-                    "Workshop lead for The Gender Lab, exploring patriarchy through narrative games.",
-                    "Co-created a gamified addiction toolkit with Krupa Foundation to prevent relapse.",
-                    "Gamified art and science curricula for PhilARThropy (Delhi) and Khulaa Aasman (Mumbai)."
+                    "Abhishek served as an artist in residence at the Govandi Arts Festival, where they worked with a small class of girls, teaching them game design, and co-authoring a game called Mohalla with them.",
+                    "Abhishek has designed and conducted many workshops with The Gender Lab, exploring gender and patriarchy using the medium of games and storytelling.",
+                    "Along with Krupa Foundation, Abhishek has also created a gamified addiction toolkit, designed to help prevent relapse.",
+                    "Abhishek has worked with PhilARThropy in Delhi, and Khulaa Aasman in Mumbai, teaching art and science to the kids through a gamified curriculum of their own creation."
                 ]
             },
-            "Press": {
+            "Press Coverage": {
                 type: "press",
                 video: "https://www.youtube.com/embed/4lUhJdXHriw",
                 links: [
-                    { t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432" },
-                    { t: "Interview: Blood Moon Over Bengaluru", l: "https://thenodmag.com/content/blood-moon-over-immersive-play-bengaluru" },
-                    { t: "Interview: Artcade Night", l: "https://www.mid-day.com/mumbai-guide/things-to-do/article/love-art-indulge-in-this-interactive-game-night-to-learn-more-about-paintings-23515186" },
-                    { t: "SHASN: AZADI - Blueprint for Semi-Coop Games", l: "https://www.boardgamequest.com/shasn-azadi-preview/" }
+                    {t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432"},
+                    {t: "Interview about Blood Moon Over Bengaluru", l: "https://thenodmag.com/content/blood-moon-over-immersive-play-bengaluru"},
+                    {t: "Interview about Artcade Night", l: "https://www.mid-day.com/mumbai-guide/things-to-do/article/love-art-indulge-in-this-interactive-game-night-to-learn-more-about-paintings-23515186"},
+                    {t: "SHASN: AZADI as a blueprint for semi-cooperative games", l: "https://www.boardgamequest.com/shasn-azadi-preview/"}
                 ]
             }
         };
 
         function openModal(key) {
-            const section = data[key];
+            const section = contentData[key];
             const title = document.getElementById('modal-title');
-            const body = document.getElementById('modal-body');
-            
+            const content = document.getElementById('modal-content');
             title.innerText = key;
-            body.innerHTML = ""; // Clear
-
             if (section.type === "press") {
-                body.innerHTML = `
-                    <div class="video-wrapper"><iframe width="100%" height="100%" src="${section.video}" frameborder="0" allowfullscreen></iframe></div>
-                    <div style="width: 100%;">
-                        <div class="instruction">Article Archives:</div>
-                        ${section.links.map(link => `<a href="${link.l}" target="_blank" class="article-link">${link.t}</a>`).join('')}
-                    </div>
-                `;
+                content.innerHTML = `<div class="video-container"><iframe src="${section.video}" frameborder="0" allowfullscreen></iframe></div>` + section.links.map(link => `<a href="${link.l}" class="press-link" target="_blank">${link.t}</a>`).join('');
             } else {
-                body.innerHTML = `
-                    <div class="image-container"><img src="${section.img}" class="main-img"></div>
-                    <ul class="labels-list">
-                        ${section.points.map((p, i) => `<li class="label-item"><span class="label-num">${i+1}</span> ${p}</li>`).join('')}
-                    </ul>
-                `;
+                content.innerHTML = `<div class="img-container"><img src="${section.img}"></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
             }
-            
             document.getElementById('modal-overlay').style.display = "block";
         }
 
         function closeModal() { document.getElementById('modal-overlay').style.display = "none"; }
+
+        const bioText = "Abhishek Lamba is a game designer, writer, performer, and educator. They co-created SHASN:AZADI, the first board game to win a social impact award at Games For Change. They are proudly non-binary.";
+        let j = 0;
+        function type() { if (j < bioText.length) { document.getElementById('bio-text').innerHTML += bioText.charAt(j); j++; setTimeout(type, 10); } }
+        window.onload = type;
     </script>
 </body>
 </html>
