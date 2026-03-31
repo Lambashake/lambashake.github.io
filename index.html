@@ -174,7 +174,7 @@
             <svg class="trophy-big" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34M12 4v10.66M8 4h8v9a4 4 0 01-8 0V4z"/></svg>
             <div style="color:var(--accent); text-transform:uppercase; font-size:2.2rem; margin-bottom:10px;">Congratulations!</div>
             <div style="font-size: 1.8rem; line-height: 1.2; margin-bottom: 20px; text-transform: uppercase;">You have now won the <br><span style="font-size: 2.4rem; color: var(--accent);">Knower of Abhishek Trophy.</span></div>
-            <button onclick="closeMastery()" style="font-family:'VT323'; cursor:pointer; font-size: 1.5rem; background:#fff; color:#000; padding: 10px 25px; border:none; text-transform:uppercase;">Collect Achievement</button>
+            <button onclick="closeMastery()" style="font-family:'VT323'; cursor:pointer; font-size: 1.5rem; background:#fff; color:#000; padding: 10px 25px; border:none; text-transform:uppercase;">Close</button>
         </div>
     </div>
 
@@ -266,7 +266,6 @@
             
             if (count === 8) {
                 document.getElementById('mini-trophy').style.display = "block";
-                // Trigger win immediately when 8 is reached
                 setTimeout(revealMastery, 500); 
             }
         }
@@ -312,8 +311,6 @@
 
         function closeMastery() { 
             document.getElementById('mastery-overlay').style.display = "none"; 
-            // Optional: reset so they can see it again next session if you want
-            // visited = []; updateProgress();
         }
 
         function saveQuest() { sfx.save(); window.open('assets/resume.pdf', '_blank'); }
