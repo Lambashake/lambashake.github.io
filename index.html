@@ -185,20 +185,24 @@
         };
 
         const contentData = {
-            "Board Games": { img: "assets/boardgames.jpg", points: [
-                "A political strategy board game about freedom struggles, in AZADI, you play as revolutionaries fighting against tyrannical imperial powers in an attempt to gain freedom.",
-                "It upends the narrative found across popular media wherein the oppressors are presented as heroes, and instead, places players in the shoes of revolutionaries.",
-                "Funded on Kickstarter, AZADI raised over 200,000$ from backers across the world.",
-                "AZADI also became the first board game ever to win the prestigious Games for Change Award, being recognized for its social impact.",
-                "Ideating this project from scratch, developing the game, and successfully funding it via Kickstarter, - Abhishek served as the co-creator of this project."
-            ]},
+            "Board Games": { 
+                type: "video",
+                videoUrl: "https://www.youtube.com/embed/KpEFTCiW_dQ",
+                points: [
+                    "A political strategy board game about freedom struggles, in AZADI, you play as revolutionaries fighting against tyrannical imperial powers in an attempt to gain freedom.",
+                    "It upends the narrative found across popular media wherein the oppressors are presented as heroes, and instead, places players in the shoes of revolutionaries.",
+                    "Funded on Kickstarter, AZADI raised over 200,000$ from backers across the world.",
+                    "AZADI also became the first board game ever to win the prestigious Games for Change Award, being recognized for its social impact.",
+                    "Ideating this project from scratch, developing the game, and successfully funding it via Kickstarter, - Abhishek served as the co-creator of this project."
+                ]
+            },
             "Art": { img: "assets/artcade.jpg", points: [
                 "For Arcade Night, Abhishek creates games that take the audience on an immersive and interactive journey across an art exhibit's narrative and historical contexts.",
                 "Exploring the intersection of art and play, Artcade Night has evolved into a wonderful tool that can make art accessible and enjoyable for everyone.",
                 "Artcade Night has sold out shows in reputed art galleries across Mumbai including Art+Charlie, Chemould CoLab, and the prestigious CSMVS.",
                 "Bridging the gap between galleries, museums, and common people Artcade Night is proof of the role that gamification can play in spreading art literacy."
             ]},
-            "Education": { img: "assets/education.jpg", points: [
+            "Education": { img: "assets/teaching.jpg", points: [
                 "Abhishek has worked as an educator and has conducted game design courses at the Indian School of Design and Innovation, and Somaiya College of Design.",
                 "They have created their own curriculum around game design, where students learn by playing, and eventually creating their own games.",
                 "Abhishek’s courses have led to the creation of more than 10 games, proof of their pedagogy’s focus on creating new authors.",
@@ -269,6 +273,8 @@
                     content.innerHTML = section.embed + `<ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
                 } else if (section.type === "press") {
                     content.innerHTML = `<div class="press-container"><div class="video-box"><iframe src="${section.video}" allowfullscreen></iframe></div><div class="press-links">` + section.links.map(link => `<a href="${link.l}" class="press-link" target="_blank">${link.t}</a>`).join('') + `</div></div>`;
+                } else if (section.type === "video") {
+                    content.innerHTML = `<div class="video-box"><iframe src="${section.videoUrl}" allowfullscreen></iframe></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
                 } else {
                     content.innerHTML = `<div class="media-container"><img src="${section.img}"></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
                 }
