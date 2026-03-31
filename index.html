@@ -32,6 +32,7 @@
 
         .no-scroll { overflow: hidden; height: 100vh; }
 
+        /* Intro Section */
         #intro-wrapper { display: flex; flex-direction: column; align-items: center; width: 95%; max-width: 850px; margin-top: 30px; gap: 20px; }
         #character-portrait { width: 180px; height: 240px; background: #fff; border: 6px solid #000; box-shadow: 6px 6px 0 rgba(0,0,0,0.5); overflow: hidden; flex-shrink: 0; }
         #character-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
@@ -44,6 +45,7 @@
         .contact-item:hover { background: var(--accent); }
         .contact-icon { width: 20px; height: 20px; stroke: #000; fill: none; stroke-width: 2; }
 
+        /* Progress UI */
         #ui-wrapper { margin-top: 25px; display: flex; flex-direction: column; align-items: center; width: 100%; }
         #prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         #prog-container { width: 250px; height: 16px; background: rgba(0,0,0,0.2); border: 4px solid #000; }
@@ -55,6 +57,7 @@
         #save-btn { background: #fff; border: 4px solid #000; padding: 8px 15px; font-family: 'VT323', monospace; font-size: 1.4rem; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         #save-btn:hover { background: var(--accent); transform: scale(1.05); }
 
+        /* Card Hand */
         .hand-container { position: relative; width: 100%; overflow: hidden; }
         .hand { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 15px; width: 100%; padding: 10px 20px 30px 20px; box-sizing: border-box; scrollbar-width: none; justify-content: flex-start; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
         .hand::-webkit-scrollbar { display: none; }
@@ -71,6 +74,7 @@
 
         @keyframes bounce { 0%, 100% { transform: translate(0, 50%); } 50% { transform: translate(8px, 50%); } }
 
+        /* Modal & Content */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px 0; }
         .modal-window { width: 95%; max-width: 900px; background: #fff; border: 8px solid #000; margin: auto; padding: 25px; color: #000; box-shadow: 12px 12px 0 var(--accent); }
         
@@ -79,9 +83,6 @@
         
         .video-box { width: 100%; position: relative; padding-bottom: 56.25%; background: #000; margin-bottom: 20px; }
         .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-        /* CANVA EMBED STYLE */
-        .canva-box { width: 100%; border: 4px solid #000; background: #eee; margin-bottom: 20px; }
 
         #loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 4000; flex-direction: column; justify-content: center; align-items: center; color: var(--accent); }
         .load-bar-container { width: 250px; height: 20px; border: 4px solid #fff; margin-top: 15px; position: relative; }
@@ -95,6 +96,7 @@
         .press-link { display: block; background: #eee; border: 2px solid #000; padding: 12px; color: #000; text-decoration: none; font-size: 1.4rem; text-transform: uppercase; }
         .press-link:hover { background: var(--text-box-red); color: #fff; }
 
+        /* Mastery State */
         #mastery-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; justify-content: center; align-items: center; }
         .mastery-window { width: 85%; max-width: 450px; background: #000; border: 8px solid #fff; padding: 30px; color: #fff; text-align: center; box-shadow: 15px 15px 0 var(--accent); }
         .trophy-svg-large { width: 100px; height: 100px; stroke: var(--accent); margin-bottom: 15px; fill: none; stroke-width: 2;}
@@ -235,14 +237,14 @@
             "Cosmic Bakery": {
                 type: "canva",
                 embed: `<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform; border: 4px solid #000;"> <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https://www.canva.com/design/DAHE7gVaHtA/a7hq8hEtgYUDUhnVUPDEaA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"> </iframe> </div> <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHE7gVaHtA&#x2F;a7hq8hEtgYUDUhnVUPDEaA&#x2F;view?utm_content=DAHE7gVaHtA&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="font-size:1.5rem; color:#000; text-transform:uppercase;">Carl's Cosmic Bakery</a> by Abhishek Lamba`,
-                points: ["Carl’s Cosmic Bakery is a series of five 20-minute tabletop games narrating the universe's creation.", "Inspired by Carl Sagan: 'If you wish to make an apple pie from scratch, you must first invent the universe.'", "Players explore scientific concepts through tactile baking metaphors.", "Currently in development - this deck outlines the core vision and mechanics."]
+                points: ["An upcoming series of 20-minute tabletop games narrating cosmic history.", "Inspired by Carl Sagan's baking metaphor for the universe.", "Designed to translate complex stellar evolution into tactile gameplay.", "Interactive project deck currently available for review."]
             },
-            "Board Games": { type: "video", videoUrl: "https://www.youtube.com/embed/KpEFTCiW_dQ", points: ["A political strategy board game about freedom struggles, AZADI places players in the shoes of revolutionaries.", "The first board game ever to win the prestigious Games for Change Award."] },
-            "Art": { img: "assets/artcade.jpg", points: ["Artcade Night gamifies art exhibits, making art literacy accessible through interactive play.", "Shows at Art+Charlie, Chemould CoLab, and CSMVS."] },
-            "Education": { img: "assets/teaching.jpg", points: ["Conducted game design courses at ISDI and Somaiya College of Design.", "Curriculum focused on creating new authors through play."] },
-            "Community": { img: "assets/community.jpg", points: ["Co-founder of One Last Rule Club, a Bombay-based community for designers and artists.", "Monthly meetups focused on play and collaboration."] },
-            "Immersive Experiences": { img: "assets/immersive.jpg", points: ["She Moves Tech: A sci-fi play exploring gender biases in AI.", "Blood Moon Over Bengaluru: A queer horror mystery."] },
-            "Social Work": { img: "assets/social.jpg", points: ["Artist in residence at Govandi Arts Festival.", "Designed workshops with The Gender Lab exploring patriarchy through storytelling."] },
+            "Board Games": { type: "video", videoUrl: "https://www.youtube.com/embed/KpEFTCiW_dQ", points: ["Co-creator of SHASN:AZADI, a political strategy board game.", "First board game to win a social impact award at Games For Change."] },
+            "Art": { img: "assets/artcade.jpg", points: ["Artcade Night: Gamifying art galleries for immersive public engagement.", "Exhibited at premier Mumbai galleries like Art+Charlie."] },
+            "Education": { img: "assets/teaching.jpg", points: ["Game design educator at ISDI and Somaiya College of Design.", "Focusing on democratizing design tools for young creators."] },
+            "Community": { img: "assets/community.jpg", points: ["Co-founder of One Last Rule Club Mumbai.", "Building spaces for artists to collaborate and play."] },
+            "Immersive Experiences": { img: "assets/immersive.jpg", points: ["Writer and performer in 'She Moves Tech' (sci-fi theatre).", "Creator of 'Blood Moon Over Bengaluru'."] },
+            "Social Work": { img: "assets/social.jpg", points: ["Artist in residence for Govandi Arts Festival.", "Community-based game design for social change."] },
             "Press Coverage": { type: "press", video: "https://www.youtube.com/embed/4lUhJdXHriw", links: [{t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432"}] }
         };
 
