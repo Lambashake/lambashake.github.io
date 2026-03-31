@@ -30,195 +30,58 @@
             padding-bottom: 50px;
         }
 
-        /* --- MOBILE OPTIMIZATION: BACKGROUND LOCK --- */
-        .no-scroll {
-            overflow: hidden;
-            height: 100vh;
-        }
+        .no-scroll { overflow: hidden; height: 100vh; }
 
-        /* --- CHARACTER SECTION --- */
-        #intro-wrapper { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            width: 95%; 
-            max-width: 850px; 
-            margin-top: 30px; 
-            gap: 20px; 
-        }
-        
-        #character-portrait { 
-            width: 180px; 
-            height: 240px; 
-            background: #fff; 
-            border: 6px solid #000; 
-            box-shadow: 6px 6px 0 rgba(0,0,0,0.5); 
-            overflow: hidden; 
-            flex-shrink: 0; 
-        }
-        
-        #character-portrait img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            object-position: center 20%; 
-        }
-
-        #dialogue-container { 
-            width: 100%; 
-            background: #fff; 
-            border: 6px solid #000; 
-            border-radius: 8px; 
-            box-shadow: 8px 8px 0 rgba(0,0,0,0.5); 
-            position: relative; 
-            min-height: 180px; 
-        }
-
-        #dialogue-header { 
-            height: 30px; 
-            background: var(--text-box-red); 
-            border-bottom: 6px solid #000; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 15px; 
-            color: #fff; 
-            text-transform: uppercase; 
-            font-size: 1.4rem;
-        }
-
+        #intro-wrapper { display: flex; flex-direction: column; align-items: center; width: 95%; max-width: 850px; margin-top: 30px; gap: 20px; }
+        #character-portrait { width: 180px; height: 240px; background: #fff; border: 6px solid #000; box-shadow: 6px 6px 0 rgba(0,0,0,0.5); overflow: hidden; flex-shrink: 0; }
+        #character-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+        #dialogue-container { width: 100%; background: #fff; border: 6px solid #000; border-radius: 8px; box-shadow: 8px 8px 0 rgba(0,0,0,0.5); position: relative; min-height: 180px; }
+        #dialogue-header { height: 30px; background: var(--text-box-red); border-bottom: 6px solid #000; display: flex; align-items: center; padding: 0 15px; color: #fff; text-transform: uppercase; font-size: 1.4rem; }
         #bio-text { padding: 15px; font-size: 1.5rem; line-height: 1.3; text-transform: uppercase; color: #111; }
 
-        #contact-bar {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-            justify-content: center;
-            padding: 0 15px 15px 15px;
-            box-sizing: border-box;
-        }
-        .contact-item {
-            background: #fff;
-            border: 3px solid #000;
-            padding: 5px 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-            color: #000;
-            text-decoration: none;
-        }
+        #contact-bar { width: 100%; display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px; justify-content: center; padding: 0 15px 15px 15px; box-sizing: border-box; }
+        .contact-item { background: #fff; border: 3px solid #000; padding: 5px 12px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; text-transform: uppercase; box-shadow: 4px 4px 0 rgba(0,0,0,0.2); color: #000; text-decoration: none; }
         .contact-item:hover { background: var(--accent); }
         .contact-icon { width: 20px; height: 20px; stroke: #000; fill: none; stroke-width: 2; }
 
-        /* --- UI & PROGRESS --- */
         #ui-wrapper { margin-top: 25px; display: flex; flex-direction: column; align-items: center; width: 100%; }
-        
         #prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         #prog-container { width: 250px; height: 16px; background: rgba(0,0,0,0.2); border: 4px solid #000; }
-        #prog-bar { height: 100%; width: 0%; background: var(--grass-green); transition: width 0.4s steps(7); }
-        
+        #prog-bar { height: 100%; width: 0%; background: var(--grass-green); transition: width 0.4s steps(8); }
         #mini-trophy { width: 24px; height: 24px; fill: var(--accent); stroke: #000; stroke-width: 2; display: none; }
-
         #prog-label { font-size: 1.3rem; text-transform: uppercase; margin-bottom: 15px; }
         .instruction-text { font-size: 1.8rem; color: #000; text-transform: uppercase; background: var(--accent); padding: 0 10px; border: 4px solid #000; margin-bottom: 20px; }
 
-        #save-btn {
-            background: #fff;
-            border: 4px solid #000;
-            padding: 8px 15px;
-            font-family: 'VT323', monospace;
-            font-size: 1.4rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        #save-btn { background: #fff; border: 4px solid #000; padding: 8px 15px; font-family: 'VT323', monospace; font-size: 1.4rem; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
         #save-btn:hover { background: var(--accent); transform: scale(1.05); }
 
-        /* --- CARDS & SCROLL INDICATORS --- */
         .hand-container { position: relative; width: 100%; overflow: hidden; }
-
-        .hand { 
-            display: flex; 
-            flex-wrap: nowrap;
-            overflow-x: auto; 
-            gap: 15px; 
-            width: 100%; 
-            padding: 10px 20px 30px 20px; 
-            box-sizing: border-box; 
-            scrollbar-width: none; 
-            justify-content: flex-start;
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x mandatory;
-        }
+        .hand { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 15px; width: 100%; padding: 10px 20px 30px 20px; box-sizing: border-box; scrollbar-width: none; justify-content: flex-start; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; }
         .hand::-webkit-scrollbar { display: none; }
 
-        .card { 
-            flex: 0 0 145px; 
-            scroll-snap-align: center;
-            height: 190px; 
-            background: #fdf6e3; 
-            border: 4px solid #000; 
-            padding: 10px; 
-            cursor: pointer; 
-            transition: transform 0.1s steps(2); 
-            box-shadow: 5px 5px 0 rgba(0,0,0,0.3); 
-            display: flex; 
-            flex-direction: column; 
-        }
+        .card { flex: 0 0 145px; scroll-snap-align: center; height: 190px; background: #fdf6e3; border: 4px solid #000; padding: 10px; cursor: pointer; transition: transform 0.1s steps(2); box-shadow: 5px 5px 0 rgba(0,0,0,0.3); display: flex; flex-direction: column; }
         .card:hover { background: var(--accent); transform: translateY(-10px); }
         .symbol-box { width: 100%; height: 110px; border: 2px solid #000; margin-bottom: 8px; display: flex; justify-content: center; align-items: center; background: #fff; }
         .card-title { font-size: 1.1rem; text-align: center; text-transform: uppercase; font-weight: bold; border-top: 1px solid #000; padding-top: 8px; margin-top: auto; color: var(--ink); }
-        svg.card-svg { width: 60px; height: 60px; fill: none; stroke: #000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        svg.card-svg { width: 60px; height: 60px; fill: none; stroke: #000; stroke-width: 2; }
 
-        .scroll-indicator {
-            display: none;
-            position: absolute;
-            bottom: 50%;
-            transform: translateY(50%);
-            font-size: 3rem;
-            color: var(--text-box-red);
-            animation: bounce 1s infinite;
-            z-index: 10;
-            pointer-events: none;
-            text-shadow: 2px 2px 0 #000;
-        }
+        .scroll-indicator { display: none; position: absolute; bottom: 50%; transform: translateY(50%); font-size: 3rem; color: var(--text-box-red); animation: bounce 1s infinite; z-index: 10; pointer-events: none; text-shadow: 2px 2px 0 #000; }
         #scroll-right { right: 10px; }
         #scroll-left { left: 10px; }
 
-        @keyframes bounce {
-            0%, 100% { transform: translate(0, 50%); }
-            50% { transform: translate(8px, 50%); }
-        }
+        @keyframes bounce { 0%, 100% { transform: translate(0, 50%); } 50% { transform: translate(8px, 50%); } }
 
-        /* --- MODAL --- */
-        #modal-overlay { 
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.9); 
-            z-index: 2000; 
-            overflow-y: auto; 
-            padding: 20px 0; 
-        }
-        .modal-window { width: 90%; max-width: 850px; background: #fff; border: 8px solid #000; margin: auto; padding: 25px; color: #000; box-shadow: 12px 12px 0 var(--accent); }
+        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; overflow-y: auto; padding: 20px 0; }
+        .modal-window { width: 95%; max-width: 900px; background: #fff; border: 8px solid #000; margin: auto; padding: 25px; color: #000; box-shadow: 12px 12px 0 var(--accent); }
         
         .media-container { width: 100%; background: #111; border: 4px solid #000; margin-bottom: 20px; display: flex; justify-content: center; overflow: hidden; position: relative; }
         .media-container img { max-width: 100%; max-height: 450px; height: auto; display: block; object-fit: contain; }
         
-        /* Video Container for Modals */
         .video-box { width: 100%; position: relative; padding-bottom: 56.25%; background: #000; margin-bottom: 20px; }
         .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* CANVA EMBED STYLE */
+        .canva-box { width: 100%; border: 4px solid #000; background: #eee; margin-bottom: 20px; }
 
         #loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 4000; flex-direction: column; justify-content: center; align-items: center; color: var(--accent); }
         .load-bar-container { width: 250px; height: 20px; border: 4px solid #fff; margin-top: 15px; position: relative; }
@@ -236,17 +99,8 @@
         .mastery-window { width: 85%; max-width: 450px; background: #000; border: 8px solid #fff; padding: 30px; color: #fff; text-align: center; box-shadow: 15px 15px 0 var(--accent); }
         .trophy-svg-large { width: 100px; height: 100px; stroke: var(--accent); margin-bottom: 15px; fill: none; stroke-width: 2;}
 
-        @media (max-width: 700px) {
-            .scroll-indicator { display: block; }
-        }
-
-        @media (min-width: 700px) {
-            #intro-wrapper { flex-direction: row; align-items: flex-start; }
-            #character-portrait { width: 220px; height: 300px; }
-            .press-grid { grid-template-columns: 1fr 1fr; }
-            #contact-bar { justify-content: flex-start; }
-            .hand { justify-content: center; overflow: hidden; }
-        }
+        @media (max-width: 700px) { .scroll-indicator { display: block; } }
+        @media (min-width: 700px) { #intro-wrapper { flex-direction: row; align-items: flex-start; } #character-portrait { width: 220px; height: 300px; } .press-grid { grid-template-columns: 1fr 1fr; } #contact-bar { justify-content: flex-start; } .hand { justify-content: flex-start; } }
     </style>
 </head>
 <body>
@@ -285,7 +139,7 @@
                 <path d="M6 9H4.5a2.5 2.5 0 010-5H6M18 9h1.5a2.5 2.5 0 000-5H18M4 22h16M10 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34M12 4v10.66M8 4h8v9a4 4 0 01-8 0V4z"/>
             </svg>
         </div>
-        <div id="prog-label">Exploration Progress: <span id="visited-count">0</span>/7</div>
+        <div id="prog-label">Exploration Progress: <span id="visited-count">0</span>/8</div>
         
         <button id="save-btn" onclick="saveQuest()">
             <svg class="contact-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
@@ -321,6 +175,10 @@
             <div class="card" onclick="openModal('Social Work')">
                 <div class="symbol-box"><svg class="card-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
                 <div class="card-title">Social Work</div>
+            </div>
+            <div class="card" onclick="openModal('Cosmic Bakery')">
+                <div class="symbol-box"><svg class="card-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+                <div class="card-title">NEW: Cosmic Bakery</div>
             </div>
             <div class="card" onclick="openModal('Press Coverage')">
                 <div class="symbol-box"><svg class="card-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
@@ -368,29 +226,24 @@
 
         const sfx = {
             hover: () => playSound(400, 'square', 0.1, 0.05),
-            open: () => {
-                playSound(523.25, 'square', 0.2, 0.1); 
-                setTimeout(() => playSound(659.25, 'square', 0.3, 0.1), 100);
-            },
-            win: () => {
-                const notes = [523, 659, 783, 1046];
-                notes.forEach((f, i) => setTimeout(() => playSound(f, 'square', 0.6, 0.15), i * 150));
-            },
+            open: () => { playSound(523.25, 'square', 0.2, 0.1); setTimeout(() => playSound(659.25, 'square', 0.3, 0.1), 100); },
+            win: () => { const notes = [523, 659, 783, 1046]; notes.forEach((f, i) => setTimeout(() => playSound(f, 'square', 0.6, 0.15), i * 150)); },
             save: () => playSound(880, 'square', 0.3, 0.1)
         };
 
         const contentData = {
-            "Board Games": { 
-                type: "video", 
-                videoUrl: "https://www.youtube.com/embed/KpEFTCiW_dQ", 
-                points: ["A political strategy board game about freedom struggles, in AZADI, you play as revolutionaries fighting against tyrannical imperial powers in an attempt to gain freedom.", "It upends the narrative found across popular media wherein the oppressors are presented as heroes, and instead, places players in the shoes of revolutionaries.", "Funded on Kickstarter, AZADI raised over 200,000$ from backers across the world.", "AZADI also became the first board game ever to win the prestigious Games for Change Award, being recognized for its social impact.", "Ideating this project from scratch, developing the game, and successfully funding it via Kickstarter, - Abhishek served as the co-creator of this project."] 
+            "Cosmic Bakery": {
+                type: "canva",
+                embed: `<div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform; border: 4px solid #000;"> <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;" src="https://www.canva.com/design/DAHE7gVaHtA/a7hq8hEtgYUDUhnVUPDEaA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"> </iframe> </div> <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHE7gVaHtA&#x2F;a7hq8hEtgYUDUhnVUPDEaA&#x2F;view?utm_content=DAHE7gVaHtA&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener" style="font-size:1.5rem; color:#000; text-transform:uppercase;">Carl's Cosmic Bakery</a> by Abhishek Lamba`,
+                points: ["Carl’s Cosmic Bakery is a series of five 20-minute tabletop games narrating the universe's creation.", "Inspired by Carl Sagan: 'If you wish to make an apple pie from scratch, you must first invent the universe.'", "Players explore scientific concepts through tactile baking metaphors.", "Currently in development - this deck outlines the core vision and mechanics."]
             },
-            "Art": { img: "assets/artcade.jpg", points: ["For Arcade Night, Abhishek creates games that take the audience on an immersive and interactive journey across an art exhibit's narrative and historical contexts.", "Exploring the intersection of art and play, Artcade Night has evolved into a wonderful tool that can make art accessible and enjoyable for everyone.", "Artcade Night has sold out shows in reputed art galleries across Mumbai including Art+Charlie, Chemould CoLab, and the prestigious CSMVS.", "Bridging the gap between galleries, museums, and common people Artcade Night is proof of the role that gamification can play in spreading art literacy."] },
-            "Education": { img: "assets/teaching.jpg", points: ["Abhishek has worked as an educator and has conducted game design courses at the Indian School of Design and Innovation, and Somaiya College of Design.", "They have created their own curriculum around game design, where students learn by playing, and eventually creating their own games.", "Abhishek’s courses have led to the creation of more than 10 games, proof of their pedagogy’s focus on creating new authors.", "Abhishek has also worked as an educator with a variety of NGOs, with curriculums focusing on art, science, gender, and game design."] },
-            "Community": { img: "assets/community.jpg", points: ["One Last Rule Club is a Bombay based community to meet-up, play games & help each other build wonderful things!", "Co-founded in 2023 by Abhishek Lamba and Nidhi Shetty, what started as a way to meet fellow gamers, soon transformed into a community of 80+ members.", "With a monthly game night, Abhishek and their co-founder often come up with their own games for the event.", "With monthly meet-ups since 2023, One Last Rule Club has attracted many members, many of whom are artists, designers, and creators."] },
-            "Immersive Experiences": { img: "assets/immersive.jpg", points: ["Abhishek has written, designed, and acted in in She Moves Tech and Blood Moon Over Bengaluru, immersive theater plays, which has had shows in Delhi and Bangalore.", "She Moves Tech is a science fiction immersive experience set in the near future, exploring the potential consequences of gender biases in AI.", "Blood Moon Over Bengaluru is a queer horror mystery, where the audience must work together to help lift a curse on a queer woman experiencing erasure from the society around her.", "Since April 1, 2019, they have also created and shared a work of art on their page - a daily streak of more than 6 years of creation."] },
-            "Social Work": { img: "assets/social.jpg", points: ["Abhishek served as an artist in residence at the Govandi Arts Festival, where they worked with a small class of girls, teaching them game design, and co-authoring a game called Mohalla with them.", "Abhishek has designed and conducted many workshops with The Gender Lab, exploring gender and patriarchy using the medium of games and storytelling.", "Along with Krupa Foundation, Abhishek have also created a gamified addiction toolkit, designed to help prevent relapse.", "Abhishek has worked with PhilARThropy in Delhi, and Khulaa Aasman in Mumbai, teaching art and science to the kids through a gamified curriculum of their own creation."] },
-            "Press Coverage": { type: "press", video: "https://www.youtube.com/embed/4lUhJdXHriw", links: [{t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432"}, {t: "Interview about Blood Moon Over Bengaluru", l: "https://thenodmag.com/content/blood-moon-over-immersive-play-bengaluru"}, {t: "Interview about Artcade Night", l: "https://www.mid-day.com/mumbai-guide/things-to-do/article/love-art-indulge-in-this-interactive-game-night-to-learn-more-about-paintings-23515186"}, {t: "SHASN: AZADI as a blueprint for semi-cooperative games", l: "https://www.boardgamequest.com/shasn-azadi-preview/"}] }
+            "Board Games": { type: "video", videoUrl: "https://www.youtube.com/embed/KpEFTCiW_dQ", points: ["A political strategy board game about freedom struggles, AZADI places players in the shoes of revolutionaries.", "The first board game ever to win the prestigious Games for Change Award."] },
+            "Art": { img: "assets/artcade.jpg", points: ["Artcade Night gamifies art exhibits, making art literacy accessible through interactive play.", "Shows at Art+Charlie, Chemould CoLab, and CSMVS."] },
+            "Education": { img: "assets/teaching.jpg", points: ["Conducted game design courses at ISDI and Somaiya College of Design.", "Curriculum focused on creating new authors through play."] },
+            "Community": { img: "assets/community.jpg", points: ["Co-founder of One Last Rule Club, a Bombay-based community for designers and artists.", "Monthly meetups focused on play and collaboration."] },
+            "Immersive Experiences": { img: "assets/immersive.jpg", points: ["She Moves Tech: A sci-fi play exploring gender biases in AI.", "Blood Moon Over Bengaluru: A queer horror mystery."] },
+            "Social Work": { img: "assets/social.jpg", points: ["Artist in residence at Govandi Arts Festival.", "Designed workshops with The Gender Lab exploring patriarchy through storytelling."] },
+            "Press Coverage": { type: "press", video: "https://www.youtube.com/embed/4lUhJdXHriw", links: [{t: "SHASN: AZADI Wins At Games For Change", l: "https://www.timesnownews.com/technology-science/shasn-azadi-bags-best-tabletop-game-at-games-for-change-awards-article-102566432"}] }
         };
 
         const fullBioText = "Abhishek Lamba is a game designer, writer, performer, and educator. They co-created SHASN:AZADI, a board game about freedom struggles, which went on to become the first board game ever to win a social impact award at Games For Change. They have written, designed, and performed in immersive experiences like She Moves Tech, Blood Moon Over Bengaluru, and Half-Life Curse. They are also the creator of Artcade Night, a one of its kind event where they gamify art exhibits. Along with that, they are a co-founder of One Last Rule Club: a community of designers and artists in Bombay. They are proudly non-binary.";
@@ -401,32 +254,14 @@
         let visited = JSON.parse(localStorage.getItem('visited_sections')) || [];
         function updateProgress() {
             document.getElementById('visited-count').innerText = visited.length;
-            const progPercent = (visited.length / 7) * 100;
+            const progPercent = (visited.length / 8) * 100;
             document.getElementById('prog-bar').style.width = progPercent + '%';
-            if (visited.length === 7) document.getElementById('mini-trophy').style.display = "block";
+            if (visited.length === 8) document.getElementById('mini-trophy').style.display = "block";
         }
-
-        const hand = document.getElementById('card-hand');
-        const arrowR = document.getElementById('scroll-right');
-        const arrowL = document.getElementById('scroll-left');
-
-        hand.addEventListener('scroll', () => {
-            if (hand.scrollLeft + hand.clientWidth >= hand.scrollWidth - 20) {
-                arrowR.style.display = 'none';
-            } else {
-                arrowR.style.display = 'block';
-            }
-            if (hand.scrollLeft > 20) {
-                arrowL.style.display = 'block';
-            } else {
-                arrowL.style.display = 'none';
-            }
-        });
 
         function openModal(key) {
             const loading = document.getElementById('loading-screen');
             const fill = document.getElementById('load-bar-fill');
-            
             document.body.classList.add('no-scroll');
             loading.style.display = 'flex';
             fill.style.width = '0%';
@@ -436,16 +271,14 @@
                 loading.style.display = 'none';
                 fill.style.transition = 'none';
                 sfx.open(); 
-                if (!visited.includes(key)) {
-                    visited.push(key);
-                    localStorage.setItem('visited_sections', JSON.stringify(visited));
-                    updateProgress();
-                }
+                if (!visited.includes(key)) { visited.push(key); localStorage.setItem('visited_sections', JSON.stringify(visited)); updateProgress(); }
                 const section = contentData[key];
                 const content = document.getElementById('modal-content');
                 document.getElementById('modal-title').innerText = key;
                 
-                if (section.type === "press") {
+                if (section.type === "canva") {
+                    content.innerHTML = section.embed + `<ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
+                } else if (section.type === "press") {
                     content.innerHTML = `<div class="video-box"><iframe src="${section.video}" allowfullscreen></iframe></div><div class="press-grid">` + section.links.map(link => `<a href="${link.l}" class="press-link" target="_blank">${link.t}</a>`).join('') + `</div>`;
                 } else if (section.type === "video") {
                     content.innerHTML = `<div class="media-container"><div class="video-box"><iframe src="${section.videoUrl}" allowfullscreen></iframe></div></div><ul class="label-list">` + section.points.map(p => `<li class="label-item"><span class="label-arrow">→</span>${p}</li>`).join('') + `</ul>`;
@@ -455,18 +288,11 @@
                 
                 document.getElementById('modal-overlay').style.display = "block";
                 document.getElementById('modal-overlay').scrollTop = 0;
-
-                if (visited.length === 7 && !localStorage.getItem('mastery_achieved')) {
-                    setTimeout(() => { sfx.win(); revealMastery(); }, 1200); 
-                }
+                if (visited.length === 8 && !localStorage.getItem('mastery_achieved')) { setTimeout(() => { sfx.win(); revealMastery(); }, 1200); }
             }, 700);
         }
 
-        function closeModal() { 
-            document.getElementById('modal-overlay').style.display = "none";
-            document.body.classList.remove('no-scroll');
-        }
-
+        function closeModal() { document.getElementById('modal-overlay').style.display = "none"; document.body.classList.remove('no-scroll'); }
         function revealMastery() { document.getElementById('mastery-overlay').style.display = "flex"; localStorage.setItem('mastery_achieved', 'true'); }
         function closeMastery() { document.getElementById('mastery-overlay').style.display = "none"; }
         function saveQuest() { sfx.save(); window.open('assets/resume.pdf', '_blank'); }
